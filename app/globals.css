@@ -1,26 +1,295 @@
 @import "tailwindcss";
+@import "./redox-startup.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --surface-light: #ffffff;
+  --surface-warm: #fcf7f3;
+  --surface-dark: #111111;
+  --surface-dark-elevated: #1c1c1c;
+  --ink-dark: #111111;
+  --ink-muted: #555555;
+  --ink-light: #fcf7f3;
+  --ink-light-muted: #a3a3a3;
+  --border-light: rgba(17, 17, 17, 0.12);
+  --border-dark: rgba(255, 255, 255, 0.12);
+  --accent: #ff6a3a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--surface-light);
+  --color-foreground: var(--ink-dark);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-bdogrotesk), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: var(--font-bdogrotesk), system-ui, sans-serif;
+  --font-display: var(--font-sequelsans), var(--font-bdogrotesk), system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--surface-light);
+  color: var(--ink-dark);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--surface-light);
+  color: var(--ink-dark);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Container matching Redox Startup Agency large container */
+.ec-container {
+  width: 100%;
+  max-width: 1650px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 3vw, 3.5rem);
+}
+
+/* Signature Redox Pill Button (.rr-btn) */
+.rr-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.95rem 1.85rem;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.rr-btn-dark {
+  background-color: #111111;
+  color: #ffffff;
+  border: 1px solid #111111;
+}
+
+.rr-btn-dark:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.rr-btn-light {
+  background-color: #ffffff;
+  color: #111111;
+  border: 1px solid #ffffff;
+}
+
+.rr-btn-light:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.rr-btn-outline-dark {
+  background-color: transparent;
+  color: #111111;
+  border: 1px solid rgba(17, 17, 17, 0.22);
+}
+
+.rr-btn-outline-dark:hover {
+  background-color: #111111;
+  border-color: #111111;
+  color: #ffffff;
+}
+
+.rr-btn-outline-light {
+  background-color: transparent;
+  color: #fcf7f3;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.rr-btn-outline-light:hover {
+  background-color: #fcf7f3;
+  border-color: #fcf7f3;
+  color: #111111;
+}
+
+.rr-btn .btn-wrap {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.25;
+}
+
+.rr-btn .text-one,
+.rr-btn .text-two {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rr-btn .text-two {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+}
+
+.rr-btn:hover .text-one {
+  transform: translateY(-100%);
+}
+
+.rr-btn:hover .text-two {
+  transform: translateY(-100%);
+}
+
+/* Signature Startup Agency Underline Link */
+.rr-btn-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1rem;
+  font-weight: 500;
+  padding-bottom: 4px;
+}
+
+.rr-btn-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rr-btn-underline:hover::after {
+  transform: scaleX(0.35);
+}
+
+/* Squiggly subtitle accent from /startup-agency */
+@keyframes svg-stroke-draw {
+  0% {
+    stroke-dashoffset: 196px;
+    stroke-dasharray: 196px;
+  }
+  25% {
+    stroke-dashoffset: 392px;
+    stroke-dasharray: 196px;
+  }
+  100% {
+    stroke-dashoffset: 392px;
+    stroke-dasharray: 196px;
+  }
+}
+
+.svg-squiggly-path {
+  animation: svg-stroke-draw 6s ease-in-out infinite;
+}
+
+/* /creative-agency ActuallyArea: "What services we provide you actually" */
+.actually-area {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  overflow: hidden;
+  will-change: background-color;
+}
+
+.actually-title {
+  text-align: center;
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+.t-line-fill {
+  display: block;
+  background-image: linear-gradient(to right, #111111 50%, #cbc7c4 50%);
+  background-size: 200% 100%;
+  background-position-x: 100%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  will-change: background-position;
+}
+
+/* /creative-agency ServiceAreaTwo Pill-Morphing Dark Service Rows */
+.service-pill-wrapper {
+  background-color: #242424;
+  transition: background-color 0.4s ease;
+}
+
+.service-pill-box {
+  background-color: #111111;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  transition: border-radius 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.35s ease;
+}
+
+.service-pill-wrapper:hover .service-pill-box {
+  border-radius: 96px;
+  background-color: #181818;
+}
+
+.service-pill-wrapper:hover .service-pill-number {
+  transform: translateX(28px);
+  color: var(--accent);
+}
+
+.service-pill-number {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
+}
+
+@media (max-width: 991px) {
+  .service-pill-wrapper:hover .service-pill-box {
+    border-radius: 24px;
+  }
+  .service-pill-wrapper:hover .service-pill-number {
+    transform: none;
+  }
+}
+
+/* Marquee continuous fallback / smooth GPU scroll */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 34s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
+/* Low-end / reduced motion guardrails */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .svg-squiggly-path,
+  .animate-marquee-slow {
+    animation: none;
+  }
+  .t-line-fill {
+    background-position-x: 0% !important;
+  }
 }
