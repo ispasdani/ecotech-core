@@ -9,9 +9,9 @@ import { blogIndexGraph } from "@/lib/seo/structured-data";
 
 export const metadata: Metadata = buildPageMetadata({
   path: "/blog",
-  title: "Engineering Journal & Blog — AI, Defense, Sovereign Chat & SEO",
+  title: "Engineering Journal & Blog: AI, Defense, Sovereign Chat & SEO",
   description:
-    "Deep-dive technical articles from ECOTECH Core covering closed-door multilingual chat, deterministic drone swarm guardrails, local-first AI, and Technical SEO / GEO.",
+    "Deep-dive technical articles from ECOTECH CORE covering closed-door multilingual chat, deterministic drone swarm guardrails, local-first AI, and Technical SEO / GEO.",
 });
 
 export default function BlogPage() {

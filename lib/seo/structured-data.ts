@@ -102,7 +102,7 @@ export function homeGraph() {
     {
       ...webPageNode({
         path: "/",
-        title: `${COMPANY.name} — ${COMPANY.tagline}`,
+        title: `${COMPANY.name}: ${COMPANY.tagline}`,
         description: COMPANY.description,
       }),
       "@type": ["WebPage", "FAQPage"],
@@ -115,7 +115,7 @@ export function homeGraph() {
     {
       "@type": "ItemList",
       "@id": `${siteUrl}#services`,
-      name: "ECOTECH Core Services",
+      name: "ECOTECH CORE Services",
       itemListElement: SERVICES.map((s, i) => ({
         "@type": "ListItem",
         position: i + 1,
@@ -126,7 +126,7 @@ export function homeGraph() {
     {
       "@type": "ItemList",
       "@id": `${siteUrl}#products`,
-      name: "ECOTECH Core Products & Case Studies",
+      name: "ECOTECH CORE Products & Case Studies",
       itemListElement: PRODUCTS.map((p, i) => ({
         "@type": "ListItem",
         position: i + 1,
@@ -143,9 +143,9 @@ export function servicesIndexGraph() {
     webSiteNode(),
     webPageNode({
       path: "/services",
-      title: "IT Consulting & Engineering Services — ECOTECH Core",
+      title: "IT Consulting & Engineering Services: ECOTECH CORE",
       description:
-        "Explore ECOTECH Core's IT consulting, sovereign multilingual chat, defense drone swarm software, local-first AI, and technical SEO services.",
+        "Explore ECOTECH CORE's IT consulting, sovereign multilingual chat, defense drone swarm software, local-first AI, and technical SEO services.",
     }),
     breadcrumbNode([
       { name: "Home", path: "/" },
@@ -206,7 +206,7 @@ export function productsIndexGraph() {
     webSiteNode(),
     webPageNode({
       path: "/products",
-      title: "Products, Defense Systems & Case Studies — ECOTECH Core",
+      title: "Products, Defense Systems & Case Studies: ECOTECH CORE",
       description:
         "Explore TITAN117, Tri-Drone Swarm GCS, CORE Sovereign Chat, DBLuna, Ninjathons, and the Ecoplast Hart 2026 case study.",
     }),
@@ -263,7 +263,7 @@ export function blogIndexGraph() {
     webSiteNode(),
     webPageNode({
       path: "/blog",
-      title: "Engineering Journal & Insights — ECOTECH Core",
+      title: "Engineering Journal & Insights: ECOTECH CORE",
       description:
         "Technical articles on sovereign multilingual chat, deterministic drone swarm guardrails, local-first AI, and Technical SEO / GEO.",
     }),
@@ -274,7 +274,7 @@ export function blogIndexGraph() {
     {
       "@type": "Blog",
       "@id": `${url}#blog`,
-      name: "ECOTECH Core Engineering Journal",
+      name: "ECOTECH CORE Engineering Journal",
       url,
       inLanguage: "en",
       publisher: { "@id": ORGANIZATION_ID },

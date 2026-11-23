@@ -4,7 +4,7 @@ import { BLOG_ARTICLES } from "@/lib/data/blog";
 
 /**
  * Homepage Recent Blog section using the exact Redox `blog-area-2`
- * editorial card design (image zoom + circular rotating arrow badge).
+ * editorial card design + `.parallax-view` vertical parallax scroll over images.
  */
 export function BlogPreview() {
   const featured = BLOG_ARTICLES.slice(0, 3);
@@ -35,7 +35,7 @@ export function BlogPreview() {
               </div>
 
               <div className="title-wrapper">
-                <h2 className="rx-section-title font-display">
+                <h2 className="rx-section-title">
                   Learn from our recent journal
                 </h2>
                 <div className="mt-7">
@@ -60,12 +60,14 @@ export function BlogPreview() {
               {featured.map((item) => (
                 <Link key={item.slug} href={`/blog/${item.slug}`}>
                   <article className="blog fade-anim">
-                    <div className="thumb">
+                    <div className="thumb parallax-view">
                       <Image
                         src={item.image}
                         alt={item.title}
                         width={640}
                         height={440}
+                        data-speed="0.85"
+                        sizes="(max-width: 991px) 100vw, 33vw"
                       />
                     </div>
                     <div className="content-wrapper">

@@ -1,15 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PRODUCTS } from "@/lib/data/products";
+import { productImage } from "@/lib/data/media";
 
-const PRODUCT_IMAGES: Record<string, string> = {
-  titan117: "/assets/imgs/project/image-30.webp",
-  "tri-drone-swarm-gcs": "/assets/imgs/project/image-31.webp",
-  "sovereign-chat": "/assets/imgs/project/image-32.webp",
-  dbluna: "/assets/imgs/project/image-33.webp",
-  ninjathons: "/assets/imgs/project/image-34.webp",
-  ecoplasthart: "/assets/imgs/project/image-35.webp",
-};
 
 /**
  * Exact recreation of Redox `/startup-agency` WorkAreaFour:
@@ -47,8 +40,8 @@ export function ProductsShowcase() {
                   The work we do, and our favorite ones
                 </h2>
                 <div className="btn-wrapper fade-anim">
-                  <Link href="/services" className="rx-btn-underline">
-                    Browse all services
+                  <Link href="/products" className="rx-btn-underline">
+                    Browse all platforms
                     <span className="icon">
                       <Image
                         src="/assets/imgs/icon/icon-5.webp"
@@ -71,13 +64,11 @@ export function ProductsShowcase() {
                     <div className="image scale">
                       <Link href={`/products/${product.slug}`}>
                         <Image
-                          src={
-                            PRODUCT_IMAGES[product.slug] ??
-                            "/assets/imgs/project/image-30.webp"
-                          }
-                          alt={`${product.name} — ${product.headline}`}
+                          src={productImage(product.slug)}
+                          alt={`${product.name}: ${product.headline}`}
                           width={805}
                           height={630}
+                          sizes="(max-width: 767px) 100vw, 50vw"
                           style={{ height: "auto" }}
                         />
                       </Link>
@@ -86,7 +77,7 @@ export function ProductsShowcase() {
                   <div className="content">
                     <h3 className="title">
                       <Link href={`/products/${product.slug}`}>
-                        {product.name} — {product.headline}
+                        {product.name}: {product.headline}
                       </Link>
                     </h3>
                     <div className="meta">

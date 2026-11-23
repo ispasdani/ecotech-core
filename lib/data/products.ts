@@ -29,10 +29,10 @@ export const PRODUCTS: readonly ProductDetail[] = [
     tag: "Local-First AI Desktop + Web",
     year: "(2026)",
     category: "AI Platform",
-    stage: "Active Build (Phases 0–3 Verified · 4–6 In Verification)",
+    stage: "Active Build (Phases 0-3 Verified · 4-6 In Verification)",
     summary:
-      "A local-first AI team for small companies that runs directly on Windows and macOS laptops—combining a general assistant, watched-folder document intelligence, sandboxed shell approvals, and free offline local models.",
-    metaTitle: "TITAN117 — Local-First AI Team on Your Laptop",
+      "A local-first AI team for small companies that runs directly on Windows and macOS laptops, combining a general assistant, watched-folder document intelligence, sandboxed shell approvals, and free offline local models.",
+    metaTitle: "TITAN117: Local-First AI Team on Your Laptop",
     metaDescription:
       "TITAN117 runs a private AI team directly on your Windows or macOS laptop: sandboxed approvals, local llama.cpp models, persistent memory, and multilingual folder search.",
     accentColor: "#FF6A3A",
@@ -48,7 +48,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
       "Sandboxed shell & permission/approval layer: risky commands, file writes, and external actions ask first.",
       "Dual model router: free offline local models (llama.cpp) + frontier cloud models via metered credits or BYOK stored in the OS keychain.",
       "Persistent, inspectable, and editable memory with task-scoped network policies and prompt-injection defenses.",
-      "Web search, deep research with citations, and interactive artifact panel (documents, charts, slides, spreadsheets — in active Phase 4–5 verification).",
+      "Web search, deep research with citations, and interactive artifact panel (documents, charts, slides, spreadsheets: in active Phase 4-5 verification).",
       "Watched-folder document agent: reads PDF, Word, Excel, PowerPoint, and email with hybrid keyword + multilingual semantic search (Romanian & English) citing exact file and page.",
     ],
     roadmapFeatures: [
@@ -58,7 +58,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
       "End-to-end encrypted Remote Control from phone/web, chat channels (Telegram, WhatsApp, Slack), and Team SSO plans.",
     ],
     architectureHighlights: [
-      "Zero rented 24/7 cloud agent servers—your company documents stay on your own laptop.",
+      "Zero rented 24/7 cloud agent servers, your company documents stay on your own laptop.",
       "Secrets live exclusively in the OS keychain, never in plaintext logs or prompts.",
       "Remote control is off by default and protected with end-to-end encryption (X25519 + XChaCha20-Poly1305).",
       "Atomic server-side credit ledger with transparent metering and zero per-seat cloud bloat.",
@@ -81,7 +81,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
     stage: "Working 6-DOF Simulator + MAVSDK Hardware Adapter",
     summary:
       "A zero-dependency Ground Control Station (GCS) and 3D outdoor simulator for piloting multi-drone swarms with seamless leader hot-swapping, pluggable offline/local LLM mission planning, and deterministic safety guardrails.",
-    metaTitle: "Tri-Drone Swarm GCS — Defense & Autonomous Drone Control",
+    metaTitle: "Tri-Drone Swarm GCS: Defense & Autonomous Drone Control",
     metaDescription:
       "Tactical Ground Control Station and 3D simulator for commanding 3-drone swarms with leader hot-swapping, deterministic LLM safety guardrails, and PX4/ArduPilot MAVSDK support.",
     accentColor: "#22C55E",
@@ -102,7 +102,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
     ],
     architectureHighlights: [
       "Strict separation between natural-language tactical planning and deterministic flight safety math.",
-      "Zero external runtime dependencies for the core simulator—starts in seconds on standard field laptops.",
+      "Zero external runtime dependencies for the core simulator, starts in seconds on standard field laptops.",
       "Full Mode-2 gamepad and keyboard telemetry HUD with multi-feed Picture-in-Picture awareness.",
     ],
     whoItIsFor: [
@@ -123,9 +123,9 @@ export const PRODUCTS: readonly ProductDetail[] = [
     stage: "Production Deployed (Used by Ecoplast Hart & Private Clients)",
     summary:
       "Dedicated, closed-door chat applications built on our CORE framework. Every client receives a completely isolated app and database where participants communicate seamlessly in their own native language with zero manual translation.",
-    metaTitle: "CORE Sovereign Chat — Closed-Door Multilingual Messaging",
+    metaTitle: "CORE Sovereign Chat: Closed-Door Multilingual Messaging",
     metaDescription:
-      "Isolated, private chat apps built on ECOTECH Core: dedicated databases, complete data sovereignty, and automatic real-time native-language messaging.",
+      "Isolated, private chat apps built on ECOTECH CORE: dedicated databases, complete data sovereignty, and automatic real-time native-language messaging.",
     accentColor: "#38BDF8",
     visualPattern: "chat",
     metrics: [
@@ -164,7 +164,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
     stage: "Feature-Complete (Pre-Production Launch)",
     summary:
       "A local-first database schema design and instant documentation platform. Draw visually or write DBML in two-way sync, import from PostgreSQL, SQL Server, or BACPAC files, and search 30,000+ columns in milliseconds.",
-    metaTitle: "DBLuna — Local-First Database Design & Documentation",
+    metaTitle: "DBLuna: Local-First Database Design & Documentation",
     metaDescription:
       "Design and document 400+ table databases in DBLuna: two-way DBML sync, PostgreSQL/SQL Server/BACPAC import, 6ms search across 30,000 columns, and offline HTML handoffs.",
     accentColor: "#A855F7",
@@ -178,7 +178,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
     verifiedFeatures: [
       "Interactive canvas (pan, zoom, marquee select, minimap, snap-to-grid, schema linter) in two-way sync with DBML code.",
       "Built for massive enterprise schemas (tested on 428-table, 672-relationship databases) with schema filtering, focus mode, and dashed stubs for hidden links.",
-      "Local-first IndexedDB persistence—works without an account, with zero-server compressed URL-fragment share links.",
+      "Local-first IndexedDB persistence, works without an account, with zero-server compressed URL-fragment share links.",
       "Direct import from live PostgreSQL, SQL Server, CSV, JSON, SQL, DBML, and BACPAC files (reading only model.xml schema, never table data).",
       "Instant generated documentation site with ~6 ms ranked search across 1,000 tables and 30,000 columns, plus portable offline HTML Reporting Handoffs for Power BI teams.",
       "Export to SQL (PostgreSQL, MySQL, SQL Server, Oracle), DBML, JSON, Markdown docs, and cropped SVG.",
@@ -207,15 +207,15 @@ export const PRODUCTS: readonly ProductDetail[] = [
     category: "EdTech & Assessment",
     stage: "V1 Feature-Complete (Launch Phase Next)",
     summary:
-      "A competitive coding platform combining live 1v1 ranked duels, multiplayer hexagonal Territory strategy games, 7-language microVM judging in 2–4 seconds, searchable in-match docs, and team hackathon events.",
-    metaTitle: "Ninjathons — Competitive Coding & MicroVM Judging Platform",
+      "A competitive coding platform combining live 1v1 ranked duels, multiplayer hexagonal Territory strategy games, 7-language microVM judging in 2-4 seconds, searchable in-match docs, and team hackathon events.",
+    metaTitle: "Ninjathons: Competitive Coding & MicroVM Judging Platform",
     metaDescription:
       "Practice and prove your engineering skills live on Ninjathons: 1v1 Glicko-2 duels, multiplayer Territory games, 7 languages judged in secure microVMs, and team hackathons.",
     accentColor: "#C4F012",
     visualPattern: "ninjathons",
     metrics: [
       { label: "Languages", value: "7 Judged" },
-      { label: "Judge Speed", value: "2–4 sec" },
+      { label: "Judge Speed", value: "2-4 sec" },
       { label: "In-App Docs", value: "587 Pages" },
       { label: "Rating Engines", value: "Glicko-2 / OpenSkill" },
     ],
@@ -228,7 +228,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
       "3 structured learning roadmaps and ~20 public SEO tutorials plus server-rendered /u/<username> developer profiles.",
     ],
     roadmapFeatures: [
-      "Live multiplayer verification of Territory (3–6 player 37/61-hex map capture rated with OpenSkill).",
+      "Live multiplayer verification of Territory (3-6 player 37/61-hex map capture rated with OpenSkill).",
       "V1.1 Ranked HTML/CSS visual duels, AI Coach, and match replays.",
     ],
     architectureHighlights: [
@@ -251,10 +251,10 @@ export const PRODUCTS: readonly ProductDetail[] = [
     category: "Client Case Study",
     stage: "Live Production Platform",
     summary:
-      "How ECOTECH Core transformed a leading Romanian industrial recycling and waste management company with a high-ranking bilingual SEO/GEO web platform, TITAN117 local document intelligence, and a dedicated Sovereign Multilingual Chat app.",
-    metaTitle: "Ecoplast Hart 2026 Case Study — Technical SEO, TITAN117 & Sovereign Chat",
+      "How ECOTECH CORE transformed a leading Romanian industrial recycling and waste management company with a high-ranking bilingual SEO/GEO web platform, TITAN117 local document intelligence, and a dedicated Sovereign Multilingual Chat app.",
+    metaTitle: "Ecoplast Hart 2026 Case Study: Technical SEO, TITAN117 & Sovereign Chat",
     metaDescription:
-      "Case study: how Ecoplast Hart uses ECOTECH Core's Technical SEO & AI-Search architecture, TITAN117 local AI, and Sovereign Closed-Door Multilingual Chat in production.",
+      "Case study: how Ecoplast Hart uses ECOTECH CORE's Technical SEO & AI-Search architecture, TITAN117 local AI, and Sovereign Closed-Door Multilingual Chat in production.",
     accentColor: "#10B981",
     visualPattern: "ecoplasthart",
     metrics: [
@@ -279,7 +279,7 @@ export const PRODUCTS: readonly ProductDetail[] = [
       "Industrial, manufacturing, and B2B service leaders who want to dominate regional and national search results while modernizing internal operations privately.",
     ],
     pricingNote:
-      "Full-stack digital transformation & ongoing IT consulting partnership by ECOTECH Core.",
+      "Full-stack digital transformation & ongoing IT consulting partnership by ECOTECH CORE.",
   },
 ];
 

@@ -1,16 +1,16 @@
 export const COMPANY = {
-  name: "ECOTECH Core",
-  legalName: "ECOTECH Core",
+  name: "ECOTECH CORE",
+  legalName: "ECOTECH CORE",
   tagline: "Sovereign AI Systems, IT Consulting & Autonomous Defense Engineering",
   description:
-    "ECOTECH Core is an IT consulting and software engineering studio building sovereign local-first AI platforms (TITAN117), closed-door multilingual chat apps, deterministic multi-drone swarm defense software, and enterprise SEO web architectures.",
+    "ECOTECH CORE is an IT consulting and software engineering studio building sovereign local-first AI platforms (TITAN117), closed-door multilingual chat apps, deterministic multi-drone swarm defense software, and enterprise SEO web architectures.",
   email: "contact@ecotechcore.com",
   location: "Romania & European Union",
   foundedYear: "2024",
   currentYear: 2026,
   heroHeadline: "Where sovereign software comes to life",
   heroSubheadline:
-    "We are an IT consulting and engineering studio crafting local-first AI teams, closed-door multilingual chat platforms, autonomous drone swarm software, and search-dominant web systems.",
+    "AI research and products that put individual freedom and data ownership at the frontier. Autonomous intelligence will reshape the world. ECOTECH CORE is dedicated to putting that power directly in your hands, not locked inside rented clouds.",
   benchmarks: [
     {
       category: "Engineering Foundation (CORE)",
@@ -34,7 +34,7 @@ export const COMPANY = {
       category: "Product & Search Performance",
       items: [
         { title: "DBLuna Schema Search Across 30,000 Columns", metric: "~6 ms" },
-        { title: "Ninjathons Isolated MicroVM Code Judging (7 Languages)", metric: "2–4 sec" },
+        { title: "Ninjathons Isolated MicroVM Code Judging (7 Languages)", metric: "2-4 sec" },
         { title: "Sovereign Closed-Door Chat Native Auto-Translation", metric: "Real-Time" },
         { title: "Ecoplast Hart Unified @graph SEO & AI-Search Grounding", metric: "Full Index" },
       ],
@@ -42,13 +42,13 @@ export const COMPANY = {
   ],
   testimonials: [
     {
-      text: "ECOTECH Core rebuilt our entire digital presence around strict technical SEO and AI-search visibility, while equipping our operations with TITAN117 for regulatory document intelligence and a private multilingual chat platform for our cross-border partners.",
+      text: "ECOTECH CORE rebuilt our entire digital presence around strict technical SEO and AI-search visibility, while equipping our operations with TITAN117 for regulatory document intelligence and a private multilingual chat platform for our cross-border partners.",
       name: "Ecoplast Hart Leadership",
       post: "Industrial Recycling & Waste Management, Romania",
       light: false,
     },
     {
-      text: "Having our own isolated, closed-door chat application where Romanian, German, and English team members type in their native language and read every reply natively—without copy-pasting into third-party translators—changed how we coordinate sensitive operations.",
+      text: "Having our own isolated, closed-door chat application where Romanian, German, and English team members type in their native language and read every reply natively, without copy-pasting into third-party translators, changed how we coordinate sensitive operations.",
       name: "Enterprise Operations Partner",
       post: "Private Sovereign Chat Deployment",
       light: true,
@@ -68,14 +68,14 @@ export const COMPANY = {
   ],
   globalFaq: [
     {
-      question: "What makes ECOTECH Core's CORE framework different from standard agencies?",
+      question: "What makes ECOTECH CORE's CORE framework different from standard agencies?",
       answer:
         "CORE is our private engineering foundation combining modern web architecture, zero-trust server-side access enforcement, automated denial testing, atomic AI spend circuit breakers, and AI-accelerated research workflows. We deliver production-grade, auditable software in weeks instead of quarters without sacrificing security or maintainability.",
     },
     {
       question: "How does your Closed-Door Multilingual Chat platform protect our data?",
       answer:
-        "Every client receives a completely separated, dedicated deployment with its own isolated database and infrastructure—never a shared multi-tenant consumer messenger. Team members write and read in their own native language in real time with zero manual translation steps, while your organization retains 100% sovereignty over every message and file.",
+        "Every client receives a completely separated, dedicated deployment with its own isolated database and infrastructure, never a shared multi-tenant consumer messenger. Team members write and read in their own native language in real time with zero manual translation steps, while your organization retains 100% sovereignty over every message and file.",
     },
     {
       question: "Is TITAN117 cloud-hosted or does it run locally on our computers?",

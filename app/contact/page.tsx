@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, ShieldCheck } from "lucide-react";
+import { PageAnimations } from "@/components/animations/page-animations";
 import { PageHero } from "@/components/sections/page-hero";
 import { ContactForm } from "@/components/sections/contact-form";
 import { FaqAccordion } from "@/components/sections/faq-accordion";
+import { RxSubtitle } from "@/components/sections/rx-blocks";
 import { JsonLd } from "@/components/seo/json-ld";
 import { COMPANY } from "@/lib/data/company";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -10,10 +11,28 @@ import { simplePageGraph } from "@/lib/seo/structured-data";
 
 export const metadata: Metadata = buildPageMetadata({
   path: "/contact",
-  title: "Contact ECOTECH Core — Start a Consulting or Product Inquiry",
+  title: "Contact ECOTECH CORE: Start a Consulting or Product Inquiry",
   description:
-    "Contact ECOTECH Core for IT consulting, dedicated closed-door multilingual chat deployments, TITAN117 local-first AI, defense drone swarm R&D, or Technical SEO.",
+    "Contact ECOTECH CORE for IT consulting, dedicated closed-door multilingual chat deployments, TITAN117 local-first AI, defense drone swarm R&D, or Technical SEO.",
 });
+
+const CHANNELS = [
+  {
+    label: "Email",
+    value: COMPANY.email,
+    href: `mailto:${COMPANY.email}`,
+  },
+  {
+    label: "Operations",
+    value: COMPANY.location,
+    note: "Working with clients across Europe and worldwide.",
+  },
+  {
+    label: "Confidentiality",
+    value: "Mutual NDA on request",
+    note: "Available upfront for defense R&D, closed-door chat instances and architecture audits.",
+  },
+] as const;
 
 export default function ContactPage() {
   return (
@@ -21,107 +40,78 @@ export default function ContactPage() {
       <JsonLd
         graph={simplePageGraph({
           path: "/contact",
-          title: "Contact ECOTECH Core",
+          title: "Contact ECOTECH CORE",
           description:
-            "Get in touch with ECOTECH Core for IT consulting, sovereign chat deployments, TITAN117, defense software, and Technical SEO.",
+            "Get in touch with ECOTECH CORE for IT consulting, sovereign chat deployments, TITAN117, defense software, and Technical SEO.",
           crumbLabel: "Contact",
         })}
       />
 
       <PageHero
         eyebrow="Contact"
-        title="Let’s discuss your architecture, product, or private deployment."
+        title="Let’s discuss your architecture, product or private deployment"
         description="Tell us what you are building or modernizing. You will speak directly with the engineers who design and ship our CORE platforms."
         crumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
       />
 
-      {/* White Section: Contact Form + Direct Channels */}
-      <section className="bg-white py-20 text-[#111111] lg:py-28">
-        <div className="ec-container grid grid-cols-1 gap-12 lg:grid-cols-12">
-          <div className="space-y-8 lg:col-span-4">
-            <div>
-              <span className="font-mono text-xs uppercase tracking-[0.16em] text-neutral-500">
-                Direct Channels
-              </span>
-              <h2 className="font-heading mt-3 text-3xl font-medium tracking-[-0.03em]">
-                Fast, confidential technical conversations.
+      {/* White: direct channels + form */}
+      <section className="section-light section-spacing-bottom">
+        <div className="rx-container">
+          <div className="grid grid-cols-1 gap-16 border-t border-black/10 pt-16 lg:grid-cols-12">
+            <div className="fade-anim lg:col-span-4" data-direction="left">
+              <RxSubtitle>Direct channels</RxSubtitle>
+              <ul className="ec-rows mt-10">
+                {CHANNELS.map((c) => (
+                  <li key={c.label} className="py-7">
+                    <div className="text-[13px] tracking-[0.04em] text-[#999999]">
+                      {c.label}
+                    </div>
+                    {"href" in c ? (
+                      <a
+                        href={c.href}
+                        className="rx-btn-underline mt-2 !text-[20px] text-[#111111]"
+                      >
+                        {c.value}
+                      </a>
+                    ) : (
+                      <p className="mt-2 text-[20px] leading-[1.3] text-[#111111]">
+                        {c.value}
+                      </p>
+                    )}
+                    {"note" in c && (
+                      <p className="mt-2 text-[15px] leading-[1.55] text-[#555555]">
+                        {c.note}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="fade-anim lg:col-span-8" data-delay="0.2">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Black: FAQ */}
+      <section className="section-dark section-spacing">
+        <div className="rx-container">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+            <div className="fade-anim lg:col-span-5">
+              <RxSubtitle>Common questions</RxSubtitle>
+              <h2 className="rx-section-title font-display mt-6 !text-[clamp(36px,4.4vw,72px)]">
+                Frequently asked questions
               </h2>
             </div>
-
-            <div className="space-y-5 border-t border-black/12 pt-6">
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#111111] text-white">
-                  <Mail className="h-4 w-4 text-[#FF6A3A]" />
-                </div>
-                <div>
-                  <div className="font-mono text-xs uppercase tracking-wider text-neutral-500">
-                    Email
-                  </div>
-                  <a
-                    href={`mailto:${COMPANY.email}`}
-                    className="mt-1 block text-base font-medium text-[#111111] hover:text-[#FF6A3A]"
-                  >
-                    {COMPANY.email}
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#111111] text-white">
-                  <MapPin className="h-4 w-4 text-[#FF6A3A]" />
-                </div>
-                <div>
-                  <div className="font-mono text-xs uppercase tracking-wider text-neutral-500">
-                    Operations
-                  </div>
-                  <p className="mt-1 text-base font-medium text-[#111111]">
-                    {COMPANY.location}
-                  </p>
-                  <p className="text-sm text-neutral-500">
-                    Working with clients across Europe &amp; globally.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#111111] text-white">
-                  <ShieldCheck className="h-4 w-4 text-[#FF6A3A]" />
-                </div>
-                <div>
-                  <div className="font-mono text-xs uppercase tracking-wider text-neutral-500">
-                    Confidentiality
-                  </div>
-                  <p className="mt-1 text-sm leading-relaxed text-neutral-600">
-                    Mutual NDAs available upfront for defense R&amp;D, closed-door
-                    chat instances, and enterprise architecture audits.
-                  </p>
-                </div>
-              </div>
+            <div className="fade-anim lg:col-span-7" data-delay="0.2">
+              <FaqAccordion items={COMPANY.globalFaq} theme="dark" />
             </div>
           </div>
-
-          <div className="lg:col-span-8">
-            <ContactForm />
-          </div>
         </div>
       </section>
-
-      {/* Black Section: Global FAQ */}
-      <section className="bg-[#111111] py-20 text-[#FCF7F3] lg:py-28">
-        <div className="ec-container grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <span className="font-mono text-xs uppercase tracking-[0.16em] text-[#FF6A3A]">
-              Common Questions
-            </span>
-            <h2 className="font-display mt-3 text-3xl font-normal leading-[1.08] tracking-[-0.04em] text-white sm:text-5xl">
-              Frequently asked questions
-            </h2>
-          </div>
-          <div className="lg:col-span-8">
-            <FaqAccordion items={COMPANY.globalFaq} theme="dark" />
-          </div>
-        </div>
-      </section>
+      <PageAnimations />
     </main>
   );
 }

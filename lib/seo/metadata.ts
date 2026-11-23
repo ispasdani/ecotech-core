@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { absoluteUrl, siteUrl } from "./routes";
 
-export const SITE_NAME = "ECOTECH Core";
+export const SITE_NAME = "ECOTECH CORE";
 export const SITE_TAGLINE =
   "IT Consulting, Sovereign AI Products & Autonomous Defense Systems";
 
@@ -35,7 +35,7 @@ export function buildPageMetadata({
       url: "/opengraph-image",
       width: 1200,
       height: 630,
-      alt: `${SITE_NAME} — ${title}`,
+      alt: `${SITE_NAME}: ${title}`,
     },
   ];
 

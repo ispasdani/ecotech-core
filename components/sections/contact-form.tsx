@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+
+const FIELD =
+  "mt-3 w-full border-0 border-b border-black/15 bg-transparent px-0 pb-4 pt-1 text-[18px] text-[#111111] outline-none transition-colors duration-300 placeholder:text-[#b5b5b5] focus:border-[#111111]";
+const LABEL = "block text-[13px] tracking-[0.04em] text-[#999999]";
 
 const PROJECT_SCOPES = [
   "IT Consulting & CORE Engineering",
@@ -28,14 +31,12 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-3xl border border-black/12 bg-[#FCF7F3] p-8 sm:p-12">
-        <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#111111] text-emerald-400">
-          <CheckCircle2 className="h-6 w-6" />
-        </div>
-        <h3 className="font-heading mt-6 text-3xl font-medium tracking-[-0.03em] text-[#111111]">
+      <div className="border-t border-black/10 pt-12">
+        <span className="text-[18px] text-[#999999]">(Sent)</span>
+        <h3 className="rx-section-title mt-6 !text-[clamp(34px,4vw,64px)]">
           Brief received, {name}.
         </h3>
-        <p className="mt-3 max-w-lg text-base leading-relaxed text-neutral-600">
+        <p className="mt-6 max-w-xl text-[18px] leading-[1.6] text-[#555555]">
           Thank you for reaching out about{" "}
           <strong className="text-[#111111]">{selectedScope}</strong>. Our
           engineering team will review your inquiry and follow up directly at{" "}
@@ -50,7 +51,7 @@ export function ContactForm() {
             setCompany("");
             setMessage("");
           }}
-          className="rr-btn rr-btn-dark mt-8"
+          className="rx-btn mt-10"
         >
           <span className="btn-wrap">
             <span className="text-one">Send another inquiry</span>
@@ -64,12 +65,10 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-3xl border border-black/12 bg-[#FCF7F3] p-7 sm:p-10 lg:p-12"
+      className="w-full"
     >
-      <div className="mb-8">
-        <span className="font-mono text-xs uppercase tracking-[0.16em] text-neutral-500">
-          1. Select Topic or Platform
-        </span>
+      <div className="mb-12">
+        <span className={LABEL}>(001) Topic or platform</span>
         <div className="mt-4 flex flex-wrap gap-2.5">
           {PROJECT_SCOPES.map((scope) => {
             const active = selectedScope === scope;
@@ -78,10 +77,11 @@ export function ContactForm() {
                 key={scope}
                 type="button"
                 onClick={() => setSelectedScope(scope)}
-                className={`rounded-full border px-4 py-2 text-xs font-medium transition-colors sm:text-sm ${
+                aria-pressed={active}
+                className={`rounded-full border px-5 py-2.5 text-[13px] tracking-[0.02em] transition-colors duration-300 ${
                   active
                     ? "border-[#111111] bg-[#111111] text-white"
-                    : "border-black/15 bg-white text-[#111111] hover:border-black/40"
+                    : "border-black/15 bg-transparent text-[#111111] hover:border-[#111111]"
                 }`}
               >
                 {scope}
@@ -91,13 +91,13 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
         <div>
           <label
             htmlFor="contact-name"
-            className="block font-mono text-xs uppercase tracking-wider text-neutral-600"
+            className={LABEL}
           >
-            Your Name *
+            (002) Your name *
           </label>
           <input
             id="contact-name"
@@ -106,16 +106,16 @@ export function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Alexandru Popescu"
-            className="mt-2 w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-sm text-[#111111] outline-none transition-colors focus:border-[#111111]"
+            className={FIELD}
           />
         </div>
 
         <div>
           <label
             htmlFor="contact-email"
-            className="block font-mono text-xs uppercase tracking-wider text-neutral-600"
+            className={LABEL}
           >
-            Work Email *
+            (003) Work email *
           </label>
           <input
             id="contact-email"
@@ -124,34 +124,34 @@ export function ContactForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="name@company.com"
-            className="mt-2 w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-sm text-[#111111] outline-none transition-colors focus:border-[#111111]"
+            className={FIELD}
           />
         </div>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-10">
         <label
           htmlFor="contact-company"
-          className="block font-mono text-xs uppercase tracking-wider text-neutral-600"
+          className={LABEL}
         >
-          Organization / Company
+          (004) Organization
         </label>
         <input
           id="contact-company"
           type="text"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
-          placeholder="Company or Organization Name"
-          className="mt-2 w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-sm text-[#111111] outline-none transition-colors focus:border-[#111111]"
+          placeholder="Company or organization"
+          className={FIELD}
         />
       </div>
 
-      <div className="mt-6">
+      <div className="mt-10">
         <label
           htmlFor="contact-message"
-          className="block font-mono text-xs uppercase tracking-wider text-neutral-600"
+          className={LABEL}
         >
-          Project Details &amp; Goals *
+          (005) Project details and goals *
         </label>
         <textarea
           id="contact-message"
@@ -160,21 +160,20 @@ export function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Tell us about your timeline, security requirements, team size, or platform goals..."
-          className="mt-2 w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-sm text-[#111111] outline-none transition-colors focus:border-[#111111]"
+          className={FIELD}
         />
       </div>
 
-      <div className="mt-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <p className="text-xs text-neutral-500">
+      <div className="mt-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+        <p className="max-w-[360px] text-[14px] leading-[1.5] text-[#999999]">
           Direct engineering response. NDA available for defense &amp; closed-door
           inquiries.
         </p>
-        <button type="submit" className="rr-btn rr-btn-dark shrink-0">
+        <button type="submit" className="rx-btn shrink-0">
           <span className="btn-wrap">
-            <span className="text-one">Send Inquiry</span>
-            <span className="text-two">Send Inquiry</span>
+            <span className="text-one">Send inquiry</span>
+            <span className="text-two">Send inquiry</span>
           </span>
-          <ArrowUpRight className="h-4 w-4" />
         </button>
       </div>
     </form>

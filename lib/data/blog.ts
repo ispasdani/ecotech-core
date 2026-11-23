@@ -34,7 +34,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
     excerpt:
       "Consumer chat apps mix confidential company discussions onto third-party clouds and force multilingual teams into clumsy translation workflows. Here is how dedicated, native-language sovereign chat solves both.",
     category: "Sovereign Comms",
-    author: "ECOTECH Core",
+    author: "ECOTECH CORE",
     image: "/assets/imgs/blog/blog-1.webp",
     tags: ["Sovereign Chat", "CORE Framework", "Multilingual", "Privacy"],
     publishedAt: "2026-11-18",
@@ -43,7 +43,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
     relatedService: "sovereign-multilingual-chat",
     relatedServiceLabel: "Explore Sovereign Multilingual Chat",
     keyTakeaways: [
-      "Every client organization should own a separated application and database—never a shared multi-tenant consumer messenger.",
+      "Every client organization should own a separated application and database, never a shared multi-tenant consumer messenger.",
       "Zero-input real-time translation removes the cognitive friction of international coordination: everyone writes and reads in their own native language.",
       "Server-verified access rules and invite-only onboarding keep closed-door leadership and industrial partner groups strictly confidential.",
     ],
@@ -52,14 +52,14 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
         heading: "The Hidden Risk of Consumer Messengers in Enterprise Operations",
         body: [
           "Across Europe, industrial companies, executive boards, and cross-border supplier networks routinely exchange pricing sheets, contracts, and operational schedules over public consumer chat apps. Once those messages leave your infrastructure, you lose control over data residency, retention, and access revocation.",
-          "At ECOTECH Core, we built our Sovereign Chat platform on the CORE framework to eliminate multi-tenant exposure entirely. Every client receives a brand-new, separated chat application backed by its own dedicated database.",
+          "At ECOTECH CORE, we built our Sovereign Chat platform on the CORE framework to eliminate multi-tenant exposure entirely. Every client receives a brand-new, separated chat application backed by its own dedicated database.",
         ],
       },
       {
         heading: "Native Language Messaging Without a Single Extra Click",
         body: [
-          "Cross-border business rarely happens in a single language. A warehouse supervisor in Deva, a logistics partner in Germany, and an engineer in the UK should not have to copy-paste messages into external translation tools—especially when those tools log sensitive commercial text.",
-          "Our Sovereign Chat renders every message automatically in each participant's chosen native language. You write naturally in Romanian, English, German, or French, and your colleague reads it seamlessly in theirs—with zero manual translation buttons and zero third-party browser extensions.",
+          "Cross-border business rarely happens in a single language. A warehouse supervisor in Deva, a logistics partner in Germany, and an engineer in the UK should not have to copy-paste messages into external translation tools, especially when those tools log sensitive commercial text.",
+          "Our Sovereign Chat renders every message automatically in each participant's chosen native language. You write naturally in Romanian, English, German, or French, and your colleague reads it seamlessly in theirs, with zero manual translation buttons and zero third-party browser extensions.",
         ],
       },
       {
@@ -71,12 +71,12 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
     ],
     faq: [
       {
-        question: "How fast can ECOTECH Core deploy a dedicated Sovereign Chat instance?",
+        question: "How fast can ECOTECH CORE deploy a dedicated Sovereign Chat instance?",
         answer:
           "Because it is built on our private CORE engineering foundation, we can provision a dedicated, branded, single-tenant instance with its own database in days rather than months.",
       },
       {
-        question: "Are messages shared across different ECOTECH Core clients?",
+        question: "Are messages shared across different ECOTECH CORE clients?",
         answer:
           "Never. Each client receives an isolated deployment and a separate database with strict server-verified room and user permissions.",
       },
@@ -92,7 +92,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
     excerpt:
       "Large Language Models excel at translating high-level tactical intent into mission gameplans, but an unvalidated LLM should never touch a flight controller directly. Here is our deterministic defense architecture.",
     category: "Defense & UAV",
-    author: "ECOTECH Core",
+    author: "ECOTECH CORE",
     image: "/assets/imgs/blog/blog-2.webp",
     tags: ["Defense R&D", "Drone Swarm", "MAVSDK", "Safety Guardrails"],
     publishedAt: "2026-11-21",
@@ -109,7 +109,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
       {
         heading: "Why Probabilistic AI Needs Deterministic Flight Boundaries",
         body: [
-          "Commanding a swarm of autonomous drones via natural language unlocks rapid tactical adaptation—an operator can instruct wingmen to hold a perimeter, inspect a ridge, or reform around a new leader in seconds. Yet probabilistic models can hallucinate unsafe altitudes or intersecting trajectories.",
+          "Commanding a swarm of autonomous drones via natural language unlocks rapid tactical adaptation, an operator can instruct wingmen to hold a perimeter, inspect a ridge, or reform around a new leader in seconds. Yet probabilistic models can hallucinate unsafe altitudes or intersecting trajectories.",
           "In our Tri-Drone Swarm GCS, every LLM-generated gameplan is strictly validated by a deterministic Safety Guardrail Validator that clamps inter-drone separation distances, enforces altitude ceilings, and verifies landmark obstacle clearance before any command reaches the swarm engine.",
         ],
       },
@@ -117,7 +117,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
         heading: "Seamless Leader Hot-Swapping & Zero-Dependency Simulation",
         body: [
           "Operators pilot ALPHA-1, BRAVO-2, or CHARLIE-3 one at a time using keyboard, Mode-2 Xbox/PS gamepad, or Picture-in-Picture feed clicks. The moment control switches to BRAVO-2, the remaining drones seamlessly adapt into dynamic leader-follower formation or continue their independent validated gameplans.",
-          "Before a single real rotor spins, teams validate missions in our built-in zero-dependency 6-DOF 3D outdoor simulator—then switch to real Pixhawk PX4 or ArduPilot hardware via our abstract MAVSDK fleet adapter.",
+          "Before a single real rotor spins, teams validate missions in our built-in zero-dependency 6-DOF 3D outdoor simulator, then switch to real Pixhawk PX4 or ArduPilot hardware via our abstract MAVSDK fleet adapter.",
         ],
       },
     ],
@@ -140,11 +140,11 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
       "Local-First AI vs. Cloud Agents: Why TITAN117 Runs on Your Own Laptop",
     metaTitle: "Why TITAN117 Runs Local-First AI on Your Laptop",
     metaDescription:
-      "Why renting 24/7 cloud agent servers creates privacy and cost traps for small companies—and how TITAN117 delivers local-first AI with sandboxed approvals.",
+      "Why renting 24/7 cloud agent servers creates privacy and cost traps for small companies, and how TITAN117 delivers local-first AI with sandboxed approvals.",
     excerpt:
       "Most AI platforms ask small companies to upload their entire file tree to rented cloud servers and pay steep per-seat bills. TITAN117 flips the architecture: your AI team runs locally on your laptop.",
     category: "Local-First AI",
-    author: "ECOTECH Core",
+    author: "ECOTECH CORE",
     image: "/assets/imgs/blog/blog-3.webp",
     tags: ["TITAN117", "Local-First AI", "llama.cpp", "Privacy"],
     publishedAt: "2026-11-15",
@@ -168,7 +168,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
       {
         heading: "Watched-Folder Intelligence with Exact Citations",
         body: [
-          "With TITAN117's folder agent, you point the engine at local folders containing PDFs, Word documents, Excel spreadsheets, PowerPoint decks, and emails. Hybrid keyword and multilingual semantic search (Romanian and English) answers complex operational questions while citing the exact file and page number—and sensitive folders can be locked to 'local models only'.",
+          "With TITAN117's folder agent, you point the engine at local folders containing PDFs, Word documents, Excel spreadsheets, PowerPoint decks, and emails. Hybrid keyword and multilingual semantic search (Romanian and English) answers complex operational questions while citing the exact file and page number, and sensitive folders can be locked to 'local models only'.",
         ],
       },
     ],
@@ -181,7 +181,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
       {
         question: "How are API keys and secrets protected in TITAN117?",
         answer:
-          "All BYOK API keys and credentials are stored exclusively in the operating system's native keychain—never in plaintext configuration files, logs, or model prompts.",
+          "All BYOK API keys and credentials are stored exclusively in the operating system's native keychain, never in plaintext configuration files, logs, or model prompts.",
       },
     ],
   },
@@ -189,13 +189,13 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
     slug: "technical-seo-and-ai-search-geo-ecoplasthart-case-study",
     title:
       "Technical SEO & AI-Search (GEO) in 2026: Lessons from the Ecoplast Hart Architecture",
-    metaTitle: "Technical SEO & AI-Search (GEO) — Ecoplast Hart Case Study",
+    metaTitle: "Technical SEO & AI-Search (GEO): Ecoplast Hart Case Study",
     metaDescription:
-      "How ECOTECH Core engineered Ecoplast Hart 2026 for Google Search and AI citations using unified @graph JSON-LD, honest sitemaps, and IndexNow.",
+      "How ECOTECH CORE engineered Ecoplast Hart 2026 for Google Search and AI citations using unified @graph JSON-LD, honest sitemaps, and IndexNow.",
     excerpt:
       "Ranking in 2026 means satisfying both Google's entity graph and AI grounding crawlers like ChatGPT Search, Perplexity, and Gemini. Here are the exact engineering patterns we built for Ecoplast Hart.",
     category: "Technical SEO & GEO",
-    author: "ECOTECH Core",
+    author: "ECOTECH CORE",
     image: "/assets/imgs/blog/blog-4.webp",
     tags: ["Technical SEO", "AI-Search GEO", "Ecoplast Hart", "IndexNow"],
     publishedAt: "2026-11-12",
@@ -228,7 +228,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
       {
         question: "Does this SEO architecture work for B2B software and consulting companies too?",
         answer:
-          "Yes—this exact ECOTECH Core website uses the same unified @graph JSON-LD, honest sitemap, AI crawler rules, and IndexNow pipeline proven on Ecoplast Hart.",
+          "Yes, this exact ECOTECH CORE website uses the same unified @graph JSON-LD, honest sitemap, AI crawler rules, and IndexNow pipeline proven on Ecoplast Hart.",
       },
     ],
   },
@@ -238,11 +238,11 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
       "Zero-Trust Real-Time Backends: Why Every Access Check Belongs on the Server",
     metaTitle: "Zero-Trust Server-Side Guardrails in Modern Web Apps",
     metaDescription:
-      "Inside ECOTECH Core's security philosophy: why UI gating is never security, and how automated refusal tests eliminate broken access control.",
+      "Inside ECOTECH CORE's security philosophy: why UI gating is never security, and how automated refusal tests eliminate broken access control.",
     excerpt:
       "Hiding a button in React or redirecting in middleware does not protect your data. Here is how our CORE engineering standard enforces zero-trust server checks on every single query and mutation.",
     category: "CORE Engineering",
-    author: "ECOTECH Core",
+    author: "ECOTECH CORE",
     image: "/assets/imgs/blog/blog-5.webp",
     tags: ["Zero-Trust", "CORE Framework", "Security", "Testing"],
     publishedAt: "2026-11-08",
@@ -260,7 +260,7 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
         heading: "The Access Rule That Prevents Data Breaches",
         body: [
           "Broken access control remains the number-one vulnerability in modern SaaS applications. Developers frequently rely on middleware redirects or client-side plan checks, leaving underlying API endpoints exposed to direct requests or cross-tenant ID enumeration.",
-          "Across every platform built on our CORE framework—from TITAN117 and DBLuna to Ninjathons and Sovereign Chat—every query, mutation, and API route validates authentication, plan entitlement, and record ownership on the server.",
+          "Across every platform built on our CORE framework, from TITAN117 and DBLuna to Ninjathons and Sovereign Chat, every query, mutation, and API route validates authentication, plan entitlement, and record ownership on the server.",
         ],
       },
       {
@@ -282,13 +282,13 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
     slug: "documenting-400-table-enterprise-databases-in-milliseconds",
     title:
       "Documenting 400-Table Enterprise Schemas in Milliseconds with Local-First Indexing",
-    metaTitle: "Documenting 400-Table Databases in Milliseconds — DBLuna",
+    metaTitle: "Documenting 400-Table Databases in Milliseconds: DBLuna",
     metaDescription:
       "How DBLuna parses PostgreSQL, SQL Server, and BACPAC schemas locally to deliver 6ms search across 30,000 columns and offline Power BI handoffs.",
     excerpt:
       "Enterprise SQL Server and PostgreSQL databases routinely grow past 400 tables and 30,000 columns. Here is how DBLuna keeps diagrams, DBML code, and offline reporting docs in instant sync.",
     category: "Data & Tools",
-    author: "ECOTECH Core",
+    author: "ECOTECH CORE",
     image: "/assets/imgs/blog/blog-6.webp",
     tags: ["DBLuna", "SQL Server", "DBML", "Power BI"],
     publishedAt: "2026-11-04",
@@ -305,14 +305,14 @@ export const BLOG_ARTICLES: readonly BlogArticle[] = [
       {
         heading: "Solving Schema Drift for Large Data Teams",
         body: [
-          "Most database diagrams become obsolete the week they are drawn. In DBLuna, the visual canvas, the DBML code editor, and the generated documentation site share one deterministic parser and generator—meaning every edit stays in strict two-way sync.",
+          "Most database diagrams become obsolete the week they are drawn. In DBLuna, the visual canvas, the DBML code editor, and the generated documentation site share one deterministic parser and generator, meaning every edit stays in strict two-way sync.",
           "Tested against 428-table, 672-relationship enterprise schemas, DBLuna supports schema-group filtering, focus mode, and ranked search returning qualified matches across 30,000 columns in roughly 6 milliseconds.",
         ],
       },
       {
         heading: "Schema-Only BACPAC Imports & Zero-Server Sharing",
         body: [
-          "When importing a SQL Server BACPAC archive, DBLuna reads exclusively from model.xml—never touching table rows or customer records. Teams can even share full interactive diagrams via compressed URL fragments that never touch a backend server.",
+          "When importing a SQL Server BACPAC archive, DBLuna reads exclusively from model.xml, never touching table rows or customer records. Teams can even share full interactive diagrams via compressed URL fragments that never touch a backend server.",
         ],
       },
     ],

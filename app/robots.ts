@@ -4,7 +4,7 @@ import { siteUrl } from "@/lib/seo/routes";
 /**
  * Explicit search & AI-Search (GEO) crawler governance modeled on
  * Ecoplast Hart 2026. Naming AI grounding crawlers explicitly ensures
- * ECOTECH Core stays visible in Google AI Overviews, ChatGPT Search,
+ * ECOTECH CORE stays visible in Google AI Overviews, ChatGPT Search,
  * Claude, and Perplexity answers.
  */
 const disallow = ["/api/"];

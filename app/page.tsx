@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GsapProvider } from "@/components/animations/gsap-provider";
+import { PageAnimations } from "@/components/animations/page-animations";
 import { ActuallyServicesIntro } from "@/components/animations/actually-services-intro";
 import { HeroStartup } from "@/components/sections/hero-startup";
 import { ProductsShowcase } from "@/components/sections/products-showcase";
@@ -16,10 +16,10 @@ import { homeGraph } from "@/lib/seo/structured-data";
 
 export const metadata: Metadata = buildPageMetadata({
   path: "/",
-  title: `ECOTECH Core — ${SITE_TAGLINE}`,
+  title: `ECOTECH CORE: ${SITE_TAGLINE}`,
   description: COMPANY.description,
   keywords: [
-    "ECOTECH Core",
+    "ECOTECH CORE",
     "IT Consulting",
     "TITAN117",
     "Local-First AI",
@@ -39,36 +39,37 @@ export const metadata: Metadata = buildPageMetadata({
  */
 export default function HomePage() {
   return (
-    <GsapProvider>
+    <>
       <JsonLd graph={homeGraph()} />
       <main>
-        {/* 1. White — Exact /startup-agency HeroFive */}
+        {/* 1. White: Exact /startup-agency HeroFive */}
         <HeroStartup />
 
-        {/* 2. White — Exact /startup-agency WorkAreaFour */}
+        {/* 2. White: Exact /startup-agency WorkAreaFour */}
         <ProductsShowcase />
 
-        {/* 3. White — Exact /startup-agency MarqueeText */}
+        {/* 3. White: Exact /startup-agency MarqueeText */}
         <MarqueeBand />
 
-        {/* 4. White — Exact /startup-agency AboutFour */}
+        {/* 4. White: Exact /startup-agency AboutFour */}
         <AboutCoreStudio />
 
-        {/* 5. White -> #111111 Black — Exact /creative-agency ActuallyArea */}
+        {/* 5. White -> #111111 Black: Exact /creative-agency ActuallyArea */}
         <ActuallyServicesIntro />
 
-        {/* 6. Black (#111111) — Exact /creative-agency ServiceAreaTwo pill-morphing rows */}
+        {/* 6. Black (#111111): Exact /creative-agency ServiceAreaTwo pill-morphing rows */}
         <ServicesDarkShowcase />
 
-        {/* 7. Black (#111111) — Ecoplast Hart spotlight + Testimonials + Benchmarks */}
+        {/* 7. Black (#111111): Ecoplast Hart spotlight + Testimonials + Benchmarks */}
         <CaseStudySpotlight />
 
-        {/* 8. White — Engineering Journal / Technical SEO & AI articles */}
+        {/* 8. White: Engineering Journal / Technical SEO & AI articles */}
         <BlogPreview />
 
-        {/* 9. Black (#111111) — Exact /startup-agency CtaAreaFour */}
+        {/* 9. Black (#111111): Exact /startup-agency CtaAreaFour */}
         <CtaBand theme="dark" />
+        <PageAnimations />
       </main>
-    </GsapProvider>
+    </>
   );
 }

@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt =
-  "ECOTECH Core — IT Consulting, Sovereign AI & Autonomous Defense Systems";
+  "ECOTECH CORE: IT Consulting, Sovereign AI & Autonomous Defense Systems";
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -31,14 +31,6 @@ export default function OpenGraphImage() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-            <div
-              style={{
-                width: "18px",
-                height: "18px",
-                borderRadius: "999px",
-                backgroundColor: "#FF6A3A",
-              }}
-            />
             <span
               style={{
                 fontSize: "28px",

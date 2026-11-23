@@ -67,10 +67,11 @@ export function AboutCoreStudio() {
           <div className="thumb parallax-view go_full">
             <Image
               src="/assets/imgs/gallery/image-51.webp"
-              alt="ECOTECH Core engineering studio"
+              alt="ECOTECH CORE engineering studio"
               width={1920}
               height={980}
               data-speed="0.8"
+              sizes="100vw"
               style={{ height: "auto" }}
             />
           </div>

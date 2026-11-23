@@ -7,6 +7,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { SERVICES } from "@/lib/data/services";
 import { PRODUCTS } from "@/lib/data/products";
 import { BLOG_ARTICLES } from "@/lib/data/blog";
+import { CoreOGlyph, EcotechLogo, useCoreLogoVariant } from "./ecotech-logo";
 
 const BLOG_CATEGORIES = Array.from(
   new Set(BLOG_ARTICLES.map((a) => a.category)),
@@ -14,6 +15,8 @@ const BLOG_CATEGORIES = Array.from(
 
 /**
  * Exact Redox `/startup-agency` HeaderFive + `_menu.scss` `.dp-menu` dropdowns.
+ * Icon-free `ECOTECH CORE` wordmark with the Core "O", plus a small 1/2
+ * switch so both Core "O" options can be compared live on every page.
  */
 export function Header() {
   const pathname = usePathname();
@@ -21,6 +24,7 @@ export function Header() {
   const [mobileSubmenu, setMobileSubmenu] = useState<
     "services" | "blog" | null
   >(null);
+  const [logoVariant, setLogoVariant] = useCoreLogoVariant();
 
   const isServicesActive =
     pathname.startsWith("/services") || pathname.startsWith("/products");
@@ -31,20 +35,42 @@ export function Header() {
       <header className="header-area-5">
         <div className="rx-container">
           <div className="header-area-5__inner">
-            <div className="header__logo">
+            <div className="header__logo flex items-center gap-3">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2.5 text-[#111111]"
-                aria-label="ECOTECH Core Home"
+                className="inline-flex items-center text-[#111111]"
+                aria-label="ECOTECH CORE Home"
               >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111111]">
-                  <span className="h-2 w-2 rounded-full bg-[#FF6A3A]" />
-                </span>
-                <span className="font-heading text-[19px] font-semibold tracking-[-0.04em]">
-                  ECOTECH{" "}
-                  <span className="font-normal text-[#555555]">CORE</span>
-                </span>
+                <EcotechLogo variant={logoVariant} />
               </Link>
+
+              {/* Live compare: option 1 (ring core) vs option 2 (cutaway core) */}
+              <div
+                className="hidden items-center gap-0.5 rounded-full border border-black/10 p-0.5 sm:inline-flex"
+                role="group"
+                aria-label="Compare logo options"
+              >
+                {(["ring", "cutaway"] as const).map((v, i) => (
+                  <button
+                    key={v}
+                    type="button"
+                    onClick={() => setLogoVariant(v)}
+                    aria-pressed={logoVariant === v}
+                    title={`Logo option ${i + 1}`}
+                    className={`inline-flex h-6 items-center gap-1 rounded-full px-2 text-[10px] font-medium tracking-[0.06em] transition-colors duration-300 ${
+                      logoVariant === v
+                        ? "bg-[#111111] text-white"
+                        : "text-neutral-500 hover:text-[#111111]"
+                    }`}
+                  >
+                    <CoreOGlyph
+                      variant={v}
+                      className="inline-block h-3 w-3"
+                    />
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <nav className="main-menu hidden xl:block" aria-label="Primary">
@@ -205,7 +231,7 @@ export function Header() {
                 <span>Services</span>
                 <ChevronDown
                   className={`h-6 w-6 transition-transform ${
-                    mobileSubmenu === "services" ? "rotate-180 text-[#FF6A3A]" : ""
+                    mobileSubmenu === "services" ? "rotate-180 text-neutral-400" : ""
                   }`}
                 />
               </button>
@@ -255,7 +281,7 @@ export function Header() {
                 <span>Blog</span>
                 <ChevronDown
                   className={`h-6 w-6 transition-transform ${
-                    mobileSubmenu === "blog" ? "rotate-180 text-[#FF6A3A]" : ""
+                    mobileSubmenu === "blog" ? "rotate-180 text-neutral-400" : ""
                   }`}
                 />
               </button>

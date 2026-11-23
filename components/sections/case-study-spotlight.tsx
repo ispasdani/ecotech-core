@@ -39,7 +39,7 @@ const PROOF_ITEMS = [
     id: "5",
     number: "(005)",
     title: "Local-First Speed (TITAN117 & DBLuna)",
-    text: "Private AI agents running on your laptop, ~6ms search across 30,000 database columns, and 2–4s microVM code judging.",
+    text: "Private AI agents running on your laptop, ~6ms search across 30,000 database columns, and 2-4s microVM code judging.",
     image: "/assets/imgs/project/image-51.webp",
     link: "/products/titan117",
   },

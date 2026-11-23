@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { COMPANY } from "@/lib/data/company";
+import { EcotechLogo } from "./ecotech-logo";
 
 const NAV_ITEMS = [
   { label: "Studio", href: "/about" },
@@ -9,7 +12,8 @@ const NAV_ITEMS = [
 ] as const;
 
 /**
- * Exact recreation of Redox `/startup-agency` FooterFour on Deep Carbon Black (#111111).
+ * Exact recreation of Redox `/startup-agency` FooterFour on Deep Carbon Black (#111111)
+ * using the icon-free `ECOTECH CORE` wordmark with the Core "O" glyph.
  */
 export function Footer() {
   return (
@@ -21,15 +25,10 @@ export function Footer() {
               <div className="footer-logo">
                 <Link
                   href="/"
-                  className="inline-flex items-center gap-2.5 text-white"
+                  className="inline-flex items-center text-white"
+                  aria-label="ECOTECH CORE Home"
                 >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
-                    <span className="h-2 w-2 rounded-full bg-[#FF6A3A]" />
-                  </span>
-                  <span className="font-heading text-[19px] font-semibold tracking-[-0.04em]">
-                    ECOTECH{" "}
-                    <span className="font-normal text-neutral-400">CORE</span>
-                  </span>
+                  <EcotechLogo />
                 </Link>
               </div>
             </div>

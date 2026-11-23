@@ -37,16 +37,18 @@ export function FaqAccordion({
               className="flex w-full items-start justify-between gap-6 text-left"
             >
               <span
-                className={`font-heading text-lg font-medium tracking-[-0.02em] sm:text-xl ${
+                className={`font-heading text-[20px] font-normal leading-[1.2] tracking-[-0.02em] sm:text-[24px] ${
                   isDark ? "text-white" : "text-[#111111]"
                 }`}
               >
                 {item.question}
               </span>
               <span
-                className={`mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                className={`mt-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-colors duration-300 ${
                   isOpen
-                    ? "border-[#FF6A3A] bg-[#FF6A3A] text-white"
+                    ? isDark
+                      ? "border-white bg-white text-[#111111]"
+                      : "border-[#111111] bg-[#111111] text-white"
                     : isDark
                       ? "border-white/20 text-neutral-300"
                       : "border-black/15 text-[#111111]"

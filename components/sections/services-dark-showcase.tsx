@@ -52,17 +52,18 @@ export function ServicesDarkShowcase() {
               <div className="thumb parallax-view">
                 <Image
                   src="/assets/imgs/gallery/image-10.webp"
-                  alt="ECOTECH Core engineering architecture"
+                  alt="ECOTECH CORE engineering architecture"
                   width={500}
                   height={620}
                   data-speed="0.7"
+                  sizes="(max-width: 991px) 100vw, 30vw"
                   style={{ height: "auto" }}
                 />
               </div>
               <div className="text-wrapper">
                 <p className="text">
                   A practical blueprint explaining how our private CORE
-                  framework powers every client deployment—combining zero-trust
+                  framework powers every client deployment, combining zero-trust
                   server checks, local-first privacy, and deterministic safety.
                 </p>
                 <p className="text">
@@ -89,10 +90,11 @@ export function ServicesDarkShowcase() {
               <div className="thumb parallax-view">
                 <Image
                   src="/assets/imgs/gallery/image-11.webp"
-                  alt="ECOTECH Core production deployment"
+                  alt="ECOTECH CORE production deployment"
                   width={920}
                   height={1120}
                   data-speed="0.6"
+                  sizes="(max-width: 991px) 100vw, 50vw"
                   style={{ height: "auto" }}
                 />
               </div>

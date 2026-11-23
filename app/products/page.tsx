@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { PageAnimations } from "@/components/animations/page-animations";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/sections/page-hero";
-import { ProductVisualCard } from "@/components/sections/product-visual-card";
+import { MarqueeBand } from "@/components/sections/marquee-band";
 import { CtaBand } from "@/components/sections/cta-band";
+import { RxButton, RxSubtitle } from "@/components/sections/rx-blocks";
 import { JsonLd } from "@/components/seo/json-ld";
 import { PRODUCTS } from "@/lib/data/products";
+import { BANNER_IMAGES, PROJECT_IMAGE_SIZE, productImage } from "@/lib/data/media";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { productsIndexGraph } from "@/lib/seo/structured-data";
 
@@ -22,66 +25,85 @@ export default function ProductsPage() {
       <JsonLd graph={productsIndexGraph()} />
 
       <PageHero
-        eyebrow="Products & Production Case Studies"
-        title="Proprietary platforms built on CORE—and proven in the field."
-        description="Every product we build shares our engineering obsession with local-first privacy, server-verified security, and deterministic reliability."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Products" }]}
+        eyebrow="Platforms"
+        title="Proprietary platforms built on CORE and proven in the field"
+        description="Every product we build shares the same obsession with local-first privacy, server-verified security and reliability you can measure."
+        crumbs={[{ label: "Home", href: "/" }, { label: "Platforms" }]}
+        actions={<RxButton href="/contact">Request a walkthrough</RxButton>}
+        image={{
+          ...BANNER_IMAGES.wide,
+          alt: "ECOTECH CORE platforms",
+        }}
       />
 
-      <section className="bg-white py-20 text-[#111111] lg:py-28">
-        <div className="ec-container">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2">
-            {PRODUCTS.map((product) => (
-              <article key={product.slug} className="group flex flex-col">
-                <Link href={`/products/${product.slug}`} className="block">
-                  <div className="overflow-hidden rounded-2xl transition-transform duration-500 group-hover:-translate-y-1">
-                    <ProductVisualCard
-                      pattern={product.visualPattern}
-                      name={product.name}
-                      stage={product.stage}
-                    />
-                  </div>
+      {/* White: homepage WorkAreaFour grid, with metrics under each card */}
+      <section className="work-area-4 section-light">
+        <div className="rx-container">
+          <div className="work-area-4-inner section-spacing">
+            <div className="section-header fade-anim">
+              <div className="section-title-wrapper">
+                <div className="subtitle-wrapper">
+                  <RxSubtitle>All platforms ({PRODUCTS.length})</RxSubtitle>
+                </div>
+                <div className="title-wrapper">
+                  <h2 className="rx-section-title fade-anim">
+                    Six systems, one engineering standard
+                  </h2>
+                </div>
+              </div>
+            </div>
 
-                  <div className="mt-6 flex items-start justify-between gap-4">
-                    <div>
-                      <span className="font-mono text-xs uppercase tracking-wider text-[#FF6A3A]">
-                        {product.category}
-                      </span>
-                      <h2 className="font-heading mt-1 text-3xl font-medium tracking-[-0.03em] text-[#111111] transition-colors group-hover:text-[#FF6A3A]">
-                        {product.name}
-                      </h2>
+            <div className="works-wrapper-box section-spacing-top">
+              <div className="works-wrapper-4">
+                {PRODUCTS.map((product) => (
+                  <article className="work-box fade-anim" key={product.slug}>
+                    <div className="thumb">
+                      <div className="image scale">
+                        <Link href={`/products/${product.slug}`}>
+                          <Image
+                            src={productImage(product.slug)}
+                            alt={`${product.name}: ${product.headline}`}
+                            width={PROJECT_IMAGE_SIZE.width}
+                            height={PROJECT_IMAGE_SIZE.height}
+                            sizes="(max-width: 767px) 100vw, 50vw"
+                            style={{ height: "auto" }}
+                          />
+                        </Link>
+                      </div>
                     </div>
-                    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/15 text-[#111111] transition-colors group-hover:bg-[#111111] group-hover:text-white">
-                      <ArrowUpRight className="h-4 w-4" />
-                    </span>
-                  </div>
-
-                  <p className="mt-3 text-base leading-relaxed text-neutral-600">
-                    {product.summary}
-                  </p>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {product.metrics.map((m) => (
-                      <span
-                        key={m.label}
-                        className="rounded-full border border-black/10 bg-[#FCF7F3] px-3 py-1 font-mono text-xs text-[#111111]"
-                      >
-                        {m.label}: <strong>{m.value}</strong>
-                      </span>
-                    ))}
-                  </div>
-                </Link>
-              </article>
-            ))}
+                    <div className="content">
+                      <h3 className="title">
+                        <Link href={`/products/${product.slug}`}>
+                          {product.name}: {product.headline}
+                        </Link>
+                      </h3>
+                      <div className="meta">
+                        <span className="tag">{product.category}</span>
+                        <span className="date">{product.year}</span>
+                      </div>
+                      <p className="mt-5 max-w-[620px] text-[17px] leading-[1.6] text-[#555555]">
+                        {product.summary}
+                      </p>
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {product.metrics.map((m) => (
+                          <span key={m.label} className="ec-pill">
+                            {m.label}: <strong>{m.value}</strong>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <CtaBand
-        eyebrow="Interested in a demo or private deployment?"
-        lineOne="Let’s"
-        lineTwo="walk you through it"
-      />
+      <MarqueeBand />
+
+      <CtaBand lineOne="Let’s" lineTwo="walk you through it" theme="dark" />
+      <PageAnimations />
     </main>
   );
 }

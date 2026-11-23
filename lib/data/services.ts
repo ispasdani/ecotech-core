@@ -31,7 +31,7 @@ export const SERVICES: readonly ServiceDetail[] = [
       "We combine senior architectural consulting with our AI-accelerated CORE framework to deliver zero-trust, thoroughly tested software systems with predictable milestones.",
     metaTitle: "IT Consulting & Custom Software Engineering",
     metaDescription:
-      "Senior IT consulting and rapid full-stack software engineering powered by ECOTECH Core's secure-by-design CORE framework.",
+      "Senior IT consulting and rapid full-stack software engineering powered by ECOTECH CORE's secure-by-design CORE framework.",
     category: "Software Engineering",
     approachTitle: "Deterministic engineering, accelerated by AI research",
     approachText:
@@ -77,7 +77,7 @@ export const SERVICES: readonly ServiceDetail[] = [
     ],
     faq: [
       {
-        question: "What kind of software can ECOTECH Core build with the CORE framework?",
+        question: "What kind of software can ECOTECH CORE build with the CORE framework?",
         answer:
           "We build B2B SaaS platforms, internal enterprise portals, local-first desktop software, private communication apps, data tooling, and high-conversion SEO web platforms.",
       },
@@ -102,19 +102,19 @@ export const SERVICES: readonly ServiceDetail[] = [
     tagline:
       "Dedicated, isolated messaging platforms for private groups where everyone writes and reads in their own native language automatically.",
     summary:
-      "Every client receives a brand-new, separated chat application with its own database and zero third-party data harvesting—plus seamless, zero-friction native language translation.",
+      "Every client receives a brand-new, separated chat application with its own database and zero third-party data harvesting, plus seamless, zero-friction native language translation.",
     metaTitle: "Sovereign Closed-Door Multilingual Chat Apps",
     metaDescription:
       "Private, isolated chat platforms built on CORE with dedicated databases and automatic real-time native-language messaging for closed-door organizations.",
     category: "Private Communications",
     approachTitle: "Closed-door sovereignty meets effortless global collaboration",
     approachText:
-      "Consumer chat apps mix your sensitive internal discussions onto multi-tenant clouds you do not control, while multilingual teams waste hours translating messages manually. Built on our CORE framework, we deploy a dedicated, standalone chat instance for each client—complete with isolated databases and automatic real-time translation so a Romanian director, a German supplier, and an English engineer can converse naturally in one room without ever pressing a translate button.",
+      "Consumer chat apps mix your sensitive internal discussions onto multi-tenant clouds you do not control, while multilingual teams waste hours translating messages manually. Built on our CORE framework, we deploy a dedicated, standalone chat instance for each client, complete with isolated databases and automatic real-time translation so a Romanian director, a German supplier, and an English engineer can converse naturally in one room without ever pressing a translate button.",
     deliverables: [
       {
         title: "Dedicated Single-Tenant Deployment",
         description:
-          "Every organization gets its own separated application and isolated database—zero shared tenants, zero ad profiling, and full data sovereignty.",
+          "Every organization gets its own separated application and isolated database, zero shared tenants, zero ad profiling, and full data sovereignty.",
       },
       {
         title: "Zero-Input Native Language Messaging",
@@ -183,7 +183,7 @@ export const SERVICES: readonly ServiceDetail[] = [
     category: "Defense & Autonomous Systems",
     approachTitle: "Never let an unvalidated LLM touch a flight controller",
     approachText:
-      "Our Tri-Drone Swarm GCS demonstrates our defense engineering philosophy: a single operator can command multiple UAVs with instant leader hot-swapping (ALPHA-1, BRAVO-2, CHARLIE-3) via keyboard, gamepad, or natural-language gameplans—while every instruction passes through a deterministic Safety Guardrail Validator enforcing separation, altitude ceilings, and obstacle clearance before reaching the flight controller.",
+      "Our Tri-Drone Swarm GCS demonstrates our defense engineering philosophy: a single operator can command multiple UAVs with instant leader hot-swapping (ALPHA-1, BRAVO-2, CHARLIE-3) via keyboard, gamepad, or natural-language gameplans, while every instruction passes through a deterministic Safety Guardrail Validator enforcing separation, altitude ceilings, and obstacle clearance before reaching the flight controller.",
     deliverables: [
       {
         title: "Dynamic Leader-Follower Swarm Engine",
@@ -198,7 +198,7 @@ export const SERVICES: readonly ServiceDetail[] = [
       {
         title: "Air-Gapped & Local LLM Command Support",
         description:
-          "Works completely offline via deterministic rule engines or local Ollama models—no internet connection or external API dependency required.",
+          "Works completely offline via deterministic rule engines or local Ollama models, no internet connection or external API dependency required.",
       },
       {
         title: "Hardware-Ready MAVSDK Integration",
@@ -235,7 +235,7 @@ export const SERVICES: readonly ServiceDetail[] = [
           "Every natural-language plan is parsed into structured waypoints and passed through a deterministic Safety Guardrail Validator that enforces minimum separation, altitude bounds, and obstacle clearance before any command reaches the flight controller.",
       },
       {
-        question: "Can ECOTECH Core customize the GCS for larger fleets or custom sensors?",
+        question: "Can ECOTECH CORE customize the GCS for larger fleets or custom sensors?",
         answer:
           "Yes. Our modular fleet adapter and obstacle-avoidance architecture can be extended to larger swarm topologies, custom telemetry overlays, and proprietary defense hardware.",
       },
@@ -248,7 +248,7 @@ export const SERVICES: readonly ServiceDetail[] = [
     titleLines: ["Technical SEO", "& AI-Search"],
     title: "Technical SEO, AI-Search (GEO) & High-Performance Web Architecture",
     tagline:
-      "Search-dominant web engineering modeled on our Ecoplast Hart 2026 architecture—built to rank in Google Search and be cited by AI answers.",
+      "Search-dominant web engineering modeled on our Ecoplast Hart 2026 architecture, built to rank in Google Search and be cited by AI answers.",
     summary:
       "We engineer websites from the code layer up for Google Search, Google Images, Bing, and AI grounding engines (ChatGPT Search, Perplexity, Gemini AI Overviews).",
     metaTitle: "Technical SEO & AI-Search (GEO) Engineering",
@@ -301,7 +301,7 @@ export const SERVICES: readonly ServiceDetail[] = [
       {
         question: "Why does IndexNow matter if most traffic comes from Google?",
         answer:
-          "IndexNow notifies Bing and Yandex within hours instead of weeks—and because ChatGPT's web search relies heavily on Bing's index, staying fresh in Bing directly improves your citation visibility in AI answers.",
+          "IndexNow notifies Bing and Yandex within hours instead of weeks, and because ChatGPT's web search relies heavily on Bing's index, staying fresh in Bing directly improves your citation visibility in AI answers.",
       },
       {
         question: "What is wrong with setting lastmod to today's date on every sitemap URL?",
@@ -322,7 +322,7 @@ export const SERVICES: readonly ServiceDetail[] = [
     titleLines: ["Local-First AI", "& Intelligence"],
     title: "Local-First AI Agents, Private Document Search & Enterprise Automation",
     tagline:
-      "Deploy private AI assistants that run on your own laptops—citing PDFs, spreadsheets, and regulations without uploading company secrets to rented clouds.",
+      "Deploy private AI assistants that run on your own laptops, citing PDFs, spreadsheets, and regulations without uploading company secrets to rented clouds.",
     summary:
       "Powered by TITAN117 and custom local-first pipelines, we help organizations adopt AI safely with sandboxed tool approvals, offline models, and auditable citations.",
     metaTitle: "Local-First AI Agents & Private Document Intelligence",

@@ -12,7 +12,7 @@
   --ink-light-muted: #a3a3a3;
   --border-light: rgba(17, 17, 17, 0.12);
   --border-dark: rgba(255, 255, 255, 0.12);
-  --accent: #ff6a3a;
+  --accent: #111111;
 }
 
 @theme inline {
@@ -29,6 +29,19 @@ html {
   scroll-behavior: smooth;
   background-color: var(--surface-light);
   color: var(--ink-dark);
+  /* Brand rule: every piece of visible copy is set in capitals. */
+  text-transform: uppercase;
+}
+
+/* Typed values stay as written; placeholders follow the brand rule. */
+input,
+textarea,
+select {
+  text-transform: none;
+}
+input::placeholder,
+textarea::placeholder {
+  text-transform: uppercase;
 }
 
 body {
@@ -80,9 +93,9 @@ body {
 }
 
 .rr-btn-dark:hover {
-  background-color: var(--accent);
-  border-color: var(--accent);
-  color: #ffffff;
+  background-color: #ffffff;
+  border-color: #111111;
+  color: #111111;
 }
 
 .rr-btn-light {
@@ -92,8 +105,8 @@ body {
 }
 
 .rr-btn-light:hover {
-  background-color: var(--accent);
-  border-color: var(--accent);
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.6);
   color: #ffffff;
 }
 
@@ -198,30 +211,28 @@ body {
 /* /creative-agency ActuallyArea: "What services we provide you actually" */
 .actually-area {
   position: relative;
-  min-height: 92vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
   overflow: hidden;
-  will-change: background-color;
 }
 
 .actually-title {
   text-align: center;
-  will-change: transform, opacity;
   transform-origin: center center;
 }
 
 .t-line-fill {
   display: block;
-  background-image: linear-gradient(to right, #111111 50%, #cbc7c4 50%);
+  background-image: linear-gradient(to right, #111111 50%, #cdc9c6 50%);
   background-size: 200% 100%;
   background-position-x: 100%;
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-  will-change: background-position;
+  padding-bottom: 0.06em;
 }
 
 /* /creative-agency ServiceAreaTwo Pill-Morphing Dark Service Rows */
@@ -243,7 +254,7 @@ body {
 
 .service-pill-wrapper:hover .service-pill-number {
   transform: translateX(28px);
-  color: var(--accent);
+  color: #999999;
 }
 
 .service-pill-number {
@@ -280,6 +291,54 @@ body {
   animation-play-state: paused;
 }
 
+/* Full-bleed reveal: the element is laid out at 100vw once, and the scroll
+   animation only changes clip-path (paint), never width (layout). */
+.go_full {
+  width: 100vw;
+  max-width: none;
+  margin-inline-start: calc(50% - 50vw);
+}
+
+/* Soft page enter on every route change (opacity only, so pinned
+   ScrollTriggers keep the viewport as their containing block). */
+@keyframes ec-page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.page-enter {
+  animation: ec-page-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hairline row list used across inner pages (homepage service-area-5 rhythm) */
+.ec-rows > * {
+  border-top: 1px solid var(--border);
+}
+.ec-rows > *:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+/* Monochrome metric pill */
+.ec-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.45em 1em;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--secondary);
+}
+.ec-pill strong {
+  color: var(--primary);
+  font-weight: 500;
+}
+
 /* Low-end / reduced motion guardrails */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -291,5 +350,8 @@ body {
   }
   .t-line-fill {
     background-position-x: 0% !important;
+  }
+  .page-enter {
+    animation: none;
   }
 }

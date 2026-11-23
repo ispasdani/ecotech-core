@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
+import { PageAnimations } from "@/components/animations/page-animations";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, CheckCircle2, Clock, Shield } from "lucide-react";
 import { PageHero } from "@/components/sections/page-hero";
-import { ProductVisualCard } from "@/components/sections/product-visual-card";
 import { CtaBand } from "@/components/sections/cta-band";
+import {
+  ParallaxImage,
+  RxButton,
+  RxSubtitle,
+  RxUnderlineLink,
+} from "@/components/sections/rx-blocks";
 import { JsonLd } from "@/components/seo/json-ld";
 import { PRODUCTS, getProductBySlug } from "@/lib/data/products";
+import { PROJECT_IMAGE_SIZE, productImage } from "@/lib/data/media";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { productSlugs } from "@/lib/seo/routes";
 import { productDetailGraph } from "@/lib/seo/structured-data";
@@ -40,198 +47,230 @@ export default async function ProductDetailPage({
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
-  const relatedProducts = PRODUCTS.filter((p) => p.slug !== product.slug).slice(
-    0,
-    3,
-  );
+  const related = PRODUCTS.filter((p) => p.slug !== product.slug).slice(0, 2);
 
   return (
     <main>
       <JsonLd graph={productDetailGraph(product)} />
 
       <PageHero
-        eyebrow={`${product.category} · ${product.stage}`}
-        title={`${product.name} — ${product.headline}`}
+        eyebrow={product.category}
+        title={`${product.name}: ${product.headline}`}
         description={product.summary}
         crumbs={[
           { label: "Home", href: "/" },
-          { label: "Products", href: "/products" },
+          { label: "Platforms", href: "/products" },
           { label: product.name },
         ]}
-        theme="dark"
+        actions={
+          <>
+            <RxButton href="/contact">Request walkthrough</RxButton>
+            <RxUnderlineLink href="/products">All platforms</RxUnderlineLink>
+          </>
+        }
       />
 
-      {/* White Section: Visual Telemetry Card + Key Metrics + Who It's For */}
-      <section className="bg-white py-20 text-[#111111] lg:py-28">
-        <div className="ec-container">
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <ProductVisualCard
-                pattern={product.visualPattern}
-                name={product.name}
-                stage={product.stage}
+      {/* White: parallax visual + metrics + audience */}
+      <section className="section-light section-spacing-bottom">
+        <div className="rx-container">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="fade-anim lg:col-span-7" data-direction="left">
+              <ParallaxImage
+                src={productImage(product.slug)}
+                alt={`${product.name} interface`}
+                width={PROJECT_IMAGE_SIZE.width}
+                height={PROJECT_IMAGE_SIZE.height}
+                speed={0.75}
+                priority
+                sizes="(max-width: 1023px) 100vw, 58vw"
               />
             </div>
 
-            <div className="space-y-8 lg:col-span-5">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="lg:col-span-5">
+              <div className="fade-anim grid grid-cols-2 border-t border-black/10">
                 {product.metrics.map((metric) => (
                   <div
                     key={metric.label}
-                    className="rounded-2xl border border-black/10 bg-[#FCF7F3] p-5"
+                    className="border-b border-black/10 py-6 pr-4 odd:border-r odd:pr-6 even:pl-6"
                   >
-                    <div className="font-mono text-[11px] uppercase tracking-wider text-neutral-500">
+                    <div className="text-[13px] tracking-[0.04em] text-[#999999]">
                       {metric.label}
                     </div>
-                    <div className="font-heading mt-1.5 text-2xl font-medium tracking-[-0.03em] text-[#111111]">
+                    <div className="font-heading mt-2 text-[26px] leading-[1.05] tracking-[-0.03em] text-[#111111] xl:text-[32px]">
                       {metric.value}
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="rounded-2xl border border-black/10 bg-white p-6">
-                <h2 className="font-mono text-xs uppercase tracking-[0.16em] text-neutral-500">
-                  Who It Is Built For
-                </h2>
-                <ul className="mt-4 space-y-3 text-sm leading-relaxed text-neutral-700">
+              <div className="fade-anim mt-12" data-delay="0.2">
+                <RxSubtitle>Built for</RxSubtitle>
+                <ul className="mt-6 space-y-4">
                   {product.whoItIsFor.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#FF6A3A]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-2xl bg-[#111111] p-6 text-white">
-                <div className="font-mono text-xs uppercase tracking-[0.16em] text-[#FF6A3A]">
-                  Availability &amp; Licensing
-                </div>
-                <p className="mt-2.5 text-sm leading-relaxed text-neutral-300">
-                  {product.pricingNote}
-                </p>
-                <div className="mt-5">
-                  <Link href="/contact" className="rr-btn rr-btn-light text-sm">
-                    <span className="btn-wrap">
-                      <span className="text-one">Request Walkthrough</span>
-                      <span className="text-two">Request Walkthrough</span>
-                    </span>
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Black Section: Verified Capabilities vs. Upcoming Roadmap & Architecture */}
-      <section className="bg-[#111111] py-20 text-[#FCF7F3] lg:py-28">
-        <div className="ec-container grid grid-cols-1 gap-12 lg:grid-cols-12">
-          <div className="space-y-10 lg:col-span-7">
-            <div>
-              <span className="font-mono text-xs uppercase tracking-[0.16em] text-emerald-400">
-                Verified Capabilities
-              </span>
-              <h2 className="font-display mt-3 text-3xl font-normal tracking-[-0.04em] text-white sm:text-4xl">
-                Built and verified today
-              </h2>
-              <ul className="mt-6 space-y-4">
-                {product.verifiedFeatures.map((feat) => (
-                  <li
-                    key={feat}
-                    className="flex items-start gap-3 rounded-2xl border border-white/10 bg-[#171717] p-5 text-sm leading-relaxed text-neutral-200 sm:text-base"
-                  >
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
-                    <span>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {product.roadmapFeatures && product.roadmapFeatures.length > 0 && (
-              <div>
-                <span className="font-mono text-xs uppercase tracking-[0.16em] text-amber-400">
-                  Transparent Roadmap
-                </span>
-                <h2 className="font-display mt-3 text-2xl font-normal tracking-[-0.03em] text-white sm:text-3xl">
-                  Upcoming phases in development
-                </h2>
-                <ul className="mt-5 space-y-3">
-                  {product.roadmapFeatures.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 text-sm leading-relaxed text-neutral-400"
+                      className="flex items-start gap-4 text-[17px] leading-[1.55] text-[#555555]"
                     >
-                      <Clock className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                      <span
+                        aria-hidden="true"
+                        className="mt-[0.55em] h-[7px] w-[7px] shrink-0 rounded-full bg-[#111111]"
+                      />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            )}
-          </div>
 
-          <div className="lg:col-span-5">
-            <div className="sticky top-28 rounded-3xl border border-white/12 bg-[#171717] p-8">
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#111111]">
-                <Shield className="h-5 w-5 text-[#FF6A3A]" />
+              <div className="fade-anim mt-12 border-t border-black/10 pt-8" data-delay="0.3">
+                <div className="text-[13px] tracking-[0.04em] text-[#999999]">
+                  Stage
+                </div>
+                <p className="mt-2 text-[17px] leading-[1.55] text-[#111111]">
+                  {product.stage}
+                </p>
+                <div className="mt-6 text-[13px] tracking-[0.04em] text-[#999999]">
+                  Availability and licensing
+                </div>
+                <p className="mt-2 text-[17px] leading-[1.55] text-[#555555]">
+                  {product.pricingNote}
+                </p>
               </div>
-              <h3 className="font-heading mt-6 text-2xl font-medium tracking-[-0.03em] text-white">
-                Security &amp; Architecture Highlights
-              </h3>
-              <ul className="mt-6 space-y-4 text-sm leading-relaxed text-neutral-300">
-                {product.architectureHighlights.map((highlight) => (
-                  <li
-                    key={highlight}
-                    className="border-b border-white/10 pb-4 last:border-0 last:pb-0"
-                  >
-                    {highlight}
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* White Section: Other Products */}
-      <section className="bg-white py-20 text-[#111111]">
-        <div className="ec-container">
-          <div className="flex items-center justify-between">
-            <h2 className="font-heading text-2xl font-medium tracking-[-0.03em] sm:text-3xl">
-              More from the ECOTECH Core ecosystem
+      {/* Black: verified capabilities, roadmap, architecture */}
+      <section className="section-dark section-spacing">
+        <div className="rx-container">
+          <div className="fade-anim">
+            <RxSubtitle>Verified today</RxSubtitle>
+            <h2 className="rx-section-title mt-6 max-w-[1100px]">
+              Built, tested and running now
             </h2>
-            <Link
-              href="/products"
-              className="rr-btn-underline text-sm text-[#111111]"
-            >
-              View all
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
           </div>
-          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {relatedProducts.map((other) => (
-              <Link
-                key={other.slug}
-                href={`/products/${other.slug}`}
-                className="group rounded-2xl border border-black/10 bg-[#FCF7F3] p-6 transition-colors hover:border-black/30"
+
+          <ol className="ec-rows mt-16">
+            {product.verifiedFeatures.map((feat, idx) => (
+              <li
+                key={feat}
+                className="fade-anim grid grid-cols-1 gap-3 py-8 md:grid-cols-[110px_1fr] lg:grid-cols-[150px_1fr]"
               >
-                <span className="font-mono text-[11px] uppercase tracking-wider text-[#FF6A3A]">
-                  {other.category}
+                <span className="text-[18px] leading-none text-[#999999]">
+                  ({String(idx + 1).padStart(3, "0")})
                 </span>
-                <h3 className="font-heading mt-2 text-2xl font-medium tracking-[-0.03em] group-hover:text-[#FF6A3A]">
-                  {other.name}
-                </h3>
-                <p className="mt-2 text-sm text-neutral-600">{other.headline}</p>
-              </Link>
+                <p className="font-heading max-w-[1100px] text-[22px] leading-[1.3] tracking-[-0.02em] text-white sm:text-[26px] xl:text-[30px]">
+                  {feat}
+                </p>
+              </li>
             ))}
+          </ol>
+
+          {product.roadmapFeatures && product.roadmapFeatures.length > 0 && (
+            <div className="mt-28">
+              <div className="fade-anim">
+                <RxSubtitle>On the roadmap</RxSubtitle>
+                <p className="mt-6 max-w-[720px] text-[18px] leading-[1.6] text-[#999999]">
+                  In development and not yet promised as available. We separate
+                  what ships from what is planned.
+                </p>
+              </div>
+              <ul className="ec-rows mt-10">
+                {product.roadmapFeatures.map((item) => (
+                  <li
+                    key={item}
+                    className="fade-anim grid grid-cols-1 gap-3 py-6 text-[17px] leading-[1.55] text-[#999999] md:grid-cols-[110px_1fr] lg:grid-cols-[150px_1fr]"
+                  >
+                    <span className="text-[13px] tracking-[0.06em] text-[#666666]">
+                      Planned
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="mt-28 grid grid-cols-1 gap-12 lg:grid-cols-12">
+            <div className="fade-anim lg:col-span-5">
+              <RxSubtitle>Architecture</RxSubtitle>
+              <h2 className="rx-section-title mt-6 !text-[clamp(34px,4vw,64px)]">
+                Security and architecture highlights
+              </h2>
+            </div>
+            <ul className="fade-anim ec-rows lg:col-span-7" data-delay="0.2">
+              {product.architectureHighlights.map((highlight) => (
+                <li
+                  key={highlight}
+                  className="py-6 text-[18px] leading-[1.55] text-[#d4d4d4]"
+                >
+                  {highlight}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      <CtaBand />
+      {/* White: more platforms with counter-scale reveal */}
+      <section className="work-area-4 section-light">
+        <div className="rx-container">
+          <div className="work-area-4-inner section-spacing">
+            <div className="section-header fade-anim">
+              <div className="section-title-wrapper">
+                <div className="subtitle-wrapper">
+                  <RxSubtitle>More platforms</RxSubtitle>
+                </div>
+                <div className="title-wrapper">
+                  <h2 className="rx-section-title">
+                    More from the ECOTECH CORE ecosystem
+                  </h2>
+                  <div className="btn-wrapper">
+                    <RxUnderlineLink href="/products">View all</RxUnderlineLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="works-wrapper-box section-spacing-top">
+              <div className="works-wrapper-4">
+                {related.map((other) => (
+                  <article className="work-box fade-anim" key={other.slug}>
+                    <div className="thumb">
+                      <div className="image scale">
+                        <Link href={`/products/${other.slug}`}>
+                          <Image
+                            src={productImage(other.slug)}
+                            alt={`${other.name}: ${other.headline}`}
+                            width={PROJECT_IMAGE_SIZE.width}
+                            height={PROJECT_IMAGE_SIZE.height}
+                            sizes="(max-width: 767px) 100vw, 50vw"
+                            style={{ height: "auto" }}
+                          />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="content">
+                      <h3 className="title">
+                        <Link href={`/products/${other.slug}`}>
+                          {other.name}: {other.headline}
+                        </Link>
+                      </h3>
+                      <div className="meta">
+                        <span className="tag">{other.tag}</span>
+                        <span className="date">{other.year}</span>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <CtaBand theme="dark" />
+      <PageAnimations />
     </main>
   );
 }
