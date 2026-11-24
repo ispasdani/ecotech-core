@@ -7,7 +7,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { SERVICES } from "@/lib/data/services";
 import { PRODUCTS } from "@/lib/data/products";
 import { BLOG_ARTICLES } from "@/lib/data/blog";
-import { CoreOGlyph, EcotechLogo, useCoreLogoVariant } from "./ecotech-logo";
+import { EcotechLogo } from "./ecotech-logo";
 
 const BLOG_CATEGORIES = Array.from(
   new Set(BLOG_ARTICLES.map((a) => a.category)),
@@ -15,8 +15,7 @@ const BLOG_CATEGORIES = Array.from(
 
 /**
  * Exact Redox `/startup-agency` HeaderFive + `_menu.scss` `.dp-menu` dropdowns.
- * Icon-free `ECOTECH CORE` wordmark with the Core "O", plus a small 1/2
- * switch so both Core "O" options can be compared live on every page.
+ * Plain `ECOTECH CORE` wordmark, no icon.
  */
 export function Header() {
   const pathname = usePathname();
@@ -24,7 +23,6 @@ export function Header() {
   const [mobileSubmenu, setMobileSubmenu] = useState<
     "services" | "blog" | null
   >(null);
-  const [logoVariant, setLogoVariant] = useCoreLogoVariant();
 
   const isServicesActive =
     pathname.startsWith("/services") || pathname.startsWith("/products");
@@ -35,42 +33,14 @@ export function Header() {
       <header className="header-area-5">
         <div className="rx-container">
           <div className="header-area-5__inner">
-            <div className="header__logo flex items-center gap-3">
+            <div className="header__logo">
               <Link
                 href="/"
                 className="inline-flex items-center text-[#111111]"
                 aria-label="ECOTECH CORE Home"
               >
-                <EcotechLogo variant={logoVariant} />
+                <EcotechLogo />
               </Link>
-
-              {/* Live compare: option 1 (ring core) vs option 2 (cutaway core) */}
-              <div
-                className="hidden items-center gap-0.5 rounded-full border border-black/10 p-0.5 sm:inline-flex"
-                role="group"
-                aria-label="Compare logo options"
-              >
-                {(["ring", "cutaway"] as const).map((v, i) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setLogoVariant(v)}
-                    aria-pressed={logoVariant === v}
-                    title={`Logo option ${i + 1}`}
-                    className={`inline-flex h-6 items-center gap-1 rounded-full px-2 text-[10px] font-medium tracking-[0.06em] transition-colors duration-300 ${
-                      logoVariant === v
-                        ? "bg-[#111111] text-white"
-                        : "text-neutral-500 hover:text-[#111111]"
-                    }`}
-                  >
-                    <CoreOGlyph
-                      variant={v}
-                      className="inline-block h-3 w-3"
-                    />
-                    {i + 1}
-                  </button>
-                ))}
-              </div>
             </div>
 
             <nav className="main-menu hidden xl:block" aria-label="Primary">
