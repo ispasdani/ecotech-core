@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageAnimations } from "@/components/animations/page-animations";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageHero } from "@/components/sections/page-hero";
 import { FaqAccordion } from "@/components/sections/faq-accordion";
 import { CtaBand } from "@/components/sections/cta-band";
@@ -39,7 +40,29 @@ export async function generateMetadata({
   });
 }
 
-export default async function ServiceDetailPage({
+export default function ServiceDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  // `params` is URL data: read it inside <Suspense> so client navigations
+  // stay instant (the fallback renders while the slug resolves).
+  return (
+    <Suspense
+      fallback={
+        <main className="section-light">
+          <div className="rx-container section-spacing text-[var(--secondary)]">
+            Loading service...
+          </div>
+        </main>
+      }
+    >
+      <ServiceDetailView params={params} />
+    </Suspense>
+  );
+}
+
+async function ServiceDetailView({
   params,
 }: {
   params: Promise<{ slug: string }>;

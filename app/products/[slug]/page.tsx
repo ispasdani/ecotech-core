@@ -3,6 +3,7 @@ import { PageAnimations } from "@/components/animations/page-animations";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { PageHero } from "@/components/sections/page-hero";
 import { CtaBand } from "@/components/sections/cta-band";
 import {
@@ -38,7 +39,29 @@ export async function generateMetadata({
   });
 }
 
-export default async function ProductDetailPage({
+export default function ProductDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  // `params` is URL data: read it inside <Suspense> so client navigations
+  // stay instant (the fallback renders while the slug resolves).
+  return (
+    <Suspense
+      fallback={
+        <main className="section-light">
+          <div className="rx-container section-spacing text-[var(--secondary)]">
+            Loading product...
+          </div>
+        </main>
+      }
+    >
+      <ProductDetailView params={params} />
+    </Suspense>
+  );
+}
+
+async function ProductDetailView({
   params,
 }: {
   params: Promise<{ slug: string }>;
