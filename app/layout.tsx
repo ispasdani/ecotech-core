@@ -108,6 +108,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      // globals.css sets `scroll-behavior: smooth` for in-page anchors. This
+      // tells Next 16 to switch it off during route changes, so a new page
+      // jumps straight to the top instead of animating there (that animation
+      // gets cut short by GSAP's ScrollTrigger refresh, leaving you mid-page).
+      data-scroll-behavior="smooth"
       className={`${bdoGrotesk.variable} ${sequelSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white text-[#111111]">
