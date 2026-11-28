@@ -25,7 +25,7 @@ export function PageHero({
     <section className="about-area-4 section-light">
       <div className="rx-container">
         <div
-          className={`about-area-4-inner section-spacing-top ${
+          className={`about-area-4-inner ${
             image ? "" : "section-spacing-bottom"
           }`}
         >
@@ -52,7 +52,9 @@ export function PageHero({
             ))}
           </nav>
 
-          <div className="section-header fade-anim">
+          {/* No top border or padding here: the hero sits right under the
+              breadcrumb (the shared .about-area-4 rule adds both). */}
+          <div className="section-header fade-anim border-t-0! pt-0!">
             <div className="section-title-wrapper">
               <div className="subtitle-wrapper">
                 <RxSubtitle>{eyebrow}</RxSubtitle>

@@ -19,10 +19,15 @@ export default function BlogPage() {
     <main>
       <JsonLd graph={blogIndexGraph()} />
 
+      {/* No visible hero: the page opens on the latest article. The h1
+          stays for screen readers and search engines. */}
+      <h1 className="sr-only">ECOTECH CORE engineering journal</h1>
+
+      {/* The topic filter reads `?category=`, which is URL data. */}
       <Suspense
         fallback={
-          <div className="rx-container section-spacing text-neutral-500">
-            Loading journal...
+          <div className="rx-container section-spacing-bottom text-[var(--secondary)]">
+            Loading articles...
           </div>
         }
       >

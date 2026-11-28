@@ -3,15 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import { PageAnimations } from "@/components/animations/page-animations";
+import { BlogArrow, BlogCard, BlogMeta } from "@/components/sections/blog-card";
+import { RxSubtitle } from "@/components/sections/rx-blocks";
 import type { BlogArticle } from "@/lib/data/blog";
 
+const ALL = "All";
+
 /**
- * Blog Index built with the exact `/startup-agency` layout, BDO Grotesk
- * typography, `.thumb.parallax-view.go_full` full-bleed parallax hero banner,
- * and `.works-wrapper-4` counter-scale + vertical parallax scroll over every
- * article image.
+ * Blog index body, read top to bottom:
+ *   1. Latest article, shown large (only on the unfiltered view).
+ *   2. One filter bar: topic pills with counts.
+ *   3. A plain 3 / 2 / 1 column grid of identical cards.
+ * The active topic lives in `?category=` so filtered views can be shared.
  */
 export function BlogGridInteractive({
   articles,
@@ -19,174 +24,156 @@ export function BlogGridInteractive({
   articles: readonly BlogArticle[];
 }) {
   const searchParams = useSearchParams();
-  const categories = [
-    "All",
-    ...Array.from(new Set(articles.map((a) => a.category))),
-  ];
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  const sorted = [...articles].sort((a, b) =>
+    b.publishedAt.localeCompare(a.publishedAt),
+  );
+
+  const counts = new Map<string, number>();
+  for (const a of sorted) counts.set(a.category, (counts.get(a.category) ?? 0) + 1);
+  const categories = [ALL, ...counts.keys()];
+
   const urlCategory = searchParams.get("category");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
   const activeCategory =
-    selectedCategory ??
-    (urlCategory && categories.includes(urlCategory) ? urlCategory : "All");
+    urlCategory && counts.has(urlCategory) ? urlCategory : ALL;
 
-  const filtered =
-    activeCategory === "All"
-      ? articles
-      : articles.filter((a) => a.category === activeCategory);
+  const selectCategory = (cat: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (cat === ALL) params.delete("category");
+    else params.set("category", cat);
+    const query = params.toString();
+    // Native history update: Next syncs useSearchParams without a navigation.
+    window.history.replaceState(null, "", query ? `?${query}` : "/blog");
+  };
+
+  // A filtered list can be much shorter, and the browser then clamps the
+  // scroll past the filter bar. Once the new list is rendered, bring the bar
+  // back to the top of the screen so the results are what the reader sees.
+  const previousCategory = useRef(activeCategory);
+  useEffect(() => {
+    if (previousCategory.current === activeCategory) return;
+    previousCategory.current = activeCategory;
+    const bar = filterRef.current;
+    if (bar && bar.getBoundingClientRect().top < 0) {
+      // Instant: a smooth scroll would be cut short by the ScrollTrigger
+      // refresh that PageAnimations runs right after this re-render.
+      bar.scrollIntoView({ block: "start", behavior: "instant" });
+    }
+  }, [activeCategory]);
+
+  const isAll = activeCategory === ALL;
+  const featured = isAll ? sorted[0] : undefined;
+  const list = isAll
+    ? sorted.slice(1)
+    : sorted.filter((a) => a.category === activeCategory);
 
   return (
-    <>
-      {/* 1. Exact /startup-agency AboutFour Header + Full-Bleed .parallax-view.go_full Image */}
-      <section className="about-area-4 section-light">
-        <div className="rx-container">
-          <div className="about-area-4-inner section-spacing-top">
-            <div className="section-header fade-anim">
-              <div className="section-title-wrapper">
-                <div className="subtitle-wrapper">
-                  <span className="rx-section-subtitle">
-                    The journal
-                    <svg
-                      viewBox="0 0 99 7"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M1.41291 5.98894C1.41291 5.98894 3.65997 6.01383 4.51655 5.98894C7.19358 5.56824 10.4255 5.80978 13.363 5.56824C17.8256 5.20128 22.1327 4.79415 26.6187 4.79415C31.6715 4.79415 36.6774 4.21934 41.7162 4.18834C46.981 4.15594 52.2465 4.18834 57.5114 4.18834C68.6462 4.18834 79.781 4.18834 90.9158 4.18834C121.155 6.61149 47.6583 -1.30401 1 1.68408"
-                        stroke="#111111"
-                        strokeLinecap="round"
-                        className="svg-elem-1"
-                      />
-                    </svg>
-                  </span>
+    <section className="section-light section-spacing">
+      <div className="rx-container">
+        {/* 1. Latest article */}
+        {featured && (
+          <div>
+            <article className="fade-anim">
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="group grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-16"
+              >
+                <div className="aspect-[16/10] overflow-hidden rounded-[15px] bg-[#f2f2f2]">
+                  <Image
+                    src={featured.image}
+                    alt={featured.title}
+                    width={1200}
+                    height={750}
+                    priority
+                    sizes="(max-width: 1023px) 100vw, 55vw"
+                    className="block h-full w-full object-cover transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                  />
                 </div>
 
-                <div className="title-wrapper">
-                  <h1 className="rx-section-title fade-anim">
-                    Engineering research, sovereign AI architecture, and
-                    Technical SEO field notes.
-                  </h1>
-                  <div className="btn-wrapper fade-anim">
-                    {categories.map((cat) => {
-                      const active = activeCategory === cat;
-                      return (
-                        <button
-                          key={cat}
-                          type="button"
-                          onClick={() => setSelectedCategory(cat)}
-                          className={`rx-btn !px-7 !py-4 !text-[16px] ${
-                            active
-                              ? ""
-                              : "!border-black/15 !bg-transparent !text-[#111111]"
-                          }`}
-                        >
-                          <span className="btn-wrap">
-                            <span
-                              className="text-one"
-                              style={
-                                active ? undefined : { color: "#111111" }
-                              }
-                            >
-                              {cat}
-                            </span>
-                            <span className="text-two">{cat}</span>
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Full-Bleed 100vw Expanding Parallax Banner Image (exact /startup-agency go_full + data-speed="0.8") */}
-            <div className="thumb parallax-view go_full">
-              <Image
-                src="/assets/imgs/gallery/image-35.webp"
-                alt="ECOTECH CORE Engineering Journal"
-                width={1920}
-                height={920}
-                priority
-                sizes="100vw"
-                data-speed="0.8"
-                style={{ height: "auto" }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Exact /startup-agency WorkAreaFour 2-Column Parallax Blog Grid */}
-      <section className="work-area-4 section-light">
-        <div className="rx-container">
-          <div className="work-area-4-inner section-spacing">
-            <div className="section-header fade-anim">
-              <div className="section-title-wrapper">
-                <div className="subtitle-wrapper">
-                  <span className="rx-section-subtitle">
-                    Articles ({filtered.length})
-                    <svg
-                      viewBox="0 0 99 7"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M1.41291 5.98894C1.41291 5.98894 3.65997 6.01383 4.51655 5.98894C7.19358 5.56824 10.4255 5.80978 13.363 5.56824C17.8256 5.20128 22.1327 4.79415 26.6187 4.79415C31.6715 4.79415 36.6774 4.21934 41.7162 4.18834C46.981 4.15594 52.2465 4.18834 57.5114 4.18834C68.6462 4.18834 79.781 4.18834 90.9158 4.18834C121.155 6.61149 47.6583 -1.30401 1 1.68408"
-                        stroke="#111111"
-                        strokeLinecap="round"
-                        className="svg-elem-1"
-                      />
-                    </svg>
-                  </span>
-                </div>
-
-                <div className="title-wrapper">
-                  <h2 className="rx-section-title fade-anim">
-                    Latest publications &amp; technical playbooks
+                <div>
+                  <RxSubtitle>Latest article</RxSubtitle>
+                  <BlogMeta article={featured} className="mt-8" />
+                  <h2 className="mt-4 font-display text-[30px] font-normal leading-[1.04] tracking-[-0.05em] text-[var(--primary)] sm:text-[40px] xl:text-[52px]">
+                    {featured.title}
                   </h2>
+                  <p className="mt-6 max-w-[560px] text-[16px] leading-[1.65] text-[var(--secondary)] lg:text-[17px]">
+                    {featured.excerpt}
+                  </p>
+                  <span className="mt-8 flex items-center gap-3 text-[15px] font-medium text-[var(--primary)]">
+                    Read article
+                    <BlogArrow />
+                  </span>
                 </div>
-              </div>
-            </div>
+              </Link>
+            </article>
+          </div>
+        )}
 
-            <div className="works-wrapper-box section-spacing-top">
-              <div className="works-wrapper-4">
-                {filtered.map((item) => (
-                  <article className="work-box fade-anim" key={item.slug}>
-                    <div className="thumb">
-                      <div className="image scale">
-                        <Link href={`/blog/${item.slug}`}>
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            width={805}
-                            height={560}
-                            sizes="(max-width: 767px) 100vw, 50vw"
-                            style={{ height: "auto" }}
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="content">
-                      <h3 className="title">
-                        <Link href={`/blog/${item.slug}`}>{item.title}</Link>
-                      </h3>
-                      <div className="meta">
-                        <span className="tag">
-                          {item.category} / {item.readMinutes} min read
-                        </span>
-                        <span className="date">({item.publishedAt})</span>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
+        {/* 2. Filter bar */}
+        <div
+          ref={filterRef}
+          className={`scroll-mt-6 flex flex-col gap-6 border-t border-[var(--border)] pt-8 lg:flex-row lg:items-end lg:justify-between ${
+            featured ? "mt-20 lg:mt-28" : ""
+          }`}
+        >
+          <div>
+            <h2 className="font-heading text-[32px] font-normal leading-none tracking-[-0.05em] text-[var(--primary)] lg:text-[44px]">
+              {isAll ? "All articles" : activeCategory}
+            </h2>
+            <p className="mt-3 text-[14px] text-[var(--secondary)]">
+              {isAll
+                ? `${sorted.length} articles · newest first`
+                : `${list.length} ${list.length === 1 ? "article" : "articles"} in this topic`}
+            </p>
+          </div>
+
+          <div
+            role="group"
+            aria-label="Filter articles by topic"
+            className="flex flex-wrap gap-2"
+          >
+            {categories.map((cat) => {
+              const active = activeCategory === cat;
+              const count = cat === ALL ? sorted.length : counts.get(cat);
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => selectCategory(cat)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[13px] font-medium tracking-[0.02em] transition-colors duration-300 ${
+                    active
+                      ? "border-[#111111] bg-[#111111] text-white"
+                      : "border-[var(--border)] text-[var(--primary)] hover:border-[#111111]"
+                  }`}
+                >
+                  {cat}
+                  <span
+                    className={active ? "text-white/60" : "text-[#999999]"}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
-      </section>
+
+        {/* 3. Grid */}
+        {list.length > 0 ? (
+          <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 2xl:gap-x-14">
+            {list.map((item) => (
+              <BlogCard key={item.slug} article={item} />
+            ))}
+          </div>
+        ) : (
+          <p className="mt-12 text-[16px] text-[var(--secondary)]">
+            No articles in this topic yet.
+          </p>
+        )}
+      </div>
       <PageAnimations rebuildKey={activeCategory} />
-    </>
+    </section>
   );
 }

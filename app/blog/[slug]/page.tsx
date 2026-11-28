@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { PageAnimations } from "@/components/animations/page-animations";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FaqAccordion } from "@/components/sections/faq-accordion";
+import { Suspense } from "react";
+import { PageAnimations } from "@/components/animations/page-animations";
+import { BlogCard, BlogMeta, formatBlogDate } from "@/components/sections/blog-card";
 import { CtaBand } from "@/components/sections/cta-band";
+import { FaqAccordion } from "@/components/sections/faq-accordion";
+import {
+  RxButton,
+  RxSubtitle,
+  RxUnderlineLink,
+} from "@/components/sections/rx-blocks";
 import { JsonLd } from "@/components/seo/json-ld";
 import { BLOG_ARTICLES, getBlogBySlug } from "@/lib/data/blog";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -34,13 +41,43 @@ export async function generateMetadata({
   });
 }
 
+function anchorId(heading: string) {
+  return heading
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+export default function BlogDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  // `params` is URL data: read it inside <Suspense> so client navigations
+  // stay instant (the fallback renders while the slug resolves).
+  return (
+    <Suspense
+      fallback={
+        <main className="section-light">
+          <div className="rx-container section-spacing text-[var(--secondary)]">
+            Loading article...
+          </div>
+        </main>
+      }
+    >
+      <BlogArticleView params={params} />
+    </Suspense>
+  );
+}
+
 /**
- * Blog Details built with the exact `/startup-agency` + Redox `blog-details-area`
- * layout and parallax scroll over images (`.parallax-view.go_full` hero banner,
- * side-by-side `.thumb.parallax-view` editorial blocks, and `.gallery-wrapper`
- * dual parallax images).
+ * Article layout, read top to bottom:
+ *   1. Header: breadcrumb, meta line, title, lead, cover image.
+ *   2. Body: sticky sidebar (contents, details, tags) next to the text,
+ *      which opens with the key takeaways, then the sections, then FAQ.
+ *   3. Related service, then more articles.
  */
-export default async function BlogDetailPage({
+async function BlogArticleView({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -49,298 +86,249 @@ export default async function BlogDetailPage({
   const article = getBlogBySlug(slug);
   if (!article) notFound();
 
-  const recent = BLOG_ARTICLES.filter((a) => a.slug !== article.slug).slice(
-    0,
-    3,
+  const sections = article.sections.map((s) => ({
+    ...s,
+    id: anchorId(s.heading),
+  }));
+  const toc = [
+    { id: "key-takeaways", label: "Key takeaways" },
+    ...sections.map((s) => ({ id: s.id, label: s.heading })),
+    ...(article.faq.length > 0 ? [{ id: "faq", label: "FAQ" }] : []),
+  ];
+
+  const sameTopic = BLOG_ARTICLES.filter(
+    (a) => a.slug !== article.slug && a.category === article.category,
   );
+  const others = BLOG_ARTICLES.filter(
+    (a) => a.slug !== article.slug && a.category !== article.category,
+  );
+  const recent = [...sameTopic, ...others].slice(0, 3);
 
   return (
     <main>
       <JsonLd graph={blogDetailGraph(article)} />
 
-      {/* 1. Exact /startup-agency Header + Full-Bleed 100vw .parallax-view.go_full Hero Image */}
-      <article className="blog-details-area about-area-4 section-light">
-        <div className="rx-container">
-          <div className="section-spacing-top">
-            <div className="section-header fade-anim">
-              <div className="section-title-wrapper">
-                <div className="subtitle-wrapper">
-                  <span className="rx-section-subtitle">
-                    {article.category}
-                    <svg
-                      viewBox="0 0 99 7"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M1.41291 5.98894C1.41291 5.98894 3.65997 6.01383 4.51655 5.98894C7.19358 5.56824 10.4255 5.80978 13.363 5.56824C17.8256 5.20128 22.1327 4.79415 26.6187 4.79415C31.6715 4.79415 36.6774 4.21934 41.7162 4.18834C46.981 4.15594 52.2465 4.18834 57.5114 4.18834C68.6462 4.18834 79.781 4.18834 90.9158 4.18834C121.155 6.61149 47.6583 -1.30401 1 1.68408"
-                        stroke="#111111"
-                        strokeLinecap="round"
-                        className="svg-elem-1"
-                      />
-                    </svg>
-                  </span>
-                </div>
+      <article className="section-light">
+        {/* 1. Header */}
+        <header className="rx-container section-spacing-top">
+          <nav
+            aria-label="Breadcrumb"
+            className="flex flex-wrap items-center gap-2 text-[13px] tracking-[0.04em] text-[#999999]"
+          >
+            <Link href="/" className="transition-colors hover:text-[#111111]">
+              Home
+            </Link>
+            <span aria-hidden="true">/</span>
+            <Link
+              href="/blog"
+              className="transition-colors hover:text-[#111111]"
+            >
+              Blog
+            </Link>
+            <span aria-hidden="true">/</span>
+            <Link
+              href={`/blog?category=${encodeURIComponent(article.category)}`}
+              className="transition-colors hover:text-[#111111]"
+            >
+              {article.category}
+            </Link>
+          </nav>
 
-                <div className="title-wrapper">
-                  <h1 className="rx-section-title">{article.title}</h1>
-                  <div className="meta">
-                    <span className="name">
-                      By <span>{article.author}</span>
-                    </span>
-                    <span className="tag has-left-line">{article.category}</span>
-                    <span className="date has-left-line">
-                      {article.publishedAt}
-                    </span>
-                    <span className="has-left-line">
-                      {article.readMinutes} min read
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Full-Bleed 100vw Expanding Parallax Cover Image */}
-            <div className="thumb parallax-view go_full">
-              <Image
-                src="/assets/imgs/gallery/image-35.webp"
-                alt={article.title}
-                width={1920}
-                height={920}
-                priority
-                sizes="100vw"
-                data-speed="0.8"
-                style={{ height: "auto" }}
-              />
-            </div>
+          <div className="fade-anim mt-12 max-w-[1180px] lg:mt-16">
+            <BlogMeta article={article} />
+            <h1 className="mt-6 font-heading text-[36px] font-normal leading-[1.02] tracking-[-0.05em] text-[var(--primary)] sm:text-[48px] lg:text-[64px] 2xl:text-[76px]">
+              {article.title}
+            </h1>
+            <p className="mt-8 max-w-[820px] text-[18px] leading-[1.6] text-[var(--secondary)] lg:text-[21px]">
+              {article.excerpt}
+            </p>
           </div>
 
-          {/* 2. Exact Redox blog-details-area Editorial Body with Inline Parallax Images */}
-          <div className="mx-auto max-w-[1020px] section-spacing">
-            <div className="section-details fade-anim">
-              <p className="text !text-[22px] !leading-[32px] !text-[#111111]">
-                {article.excerpt}
-              </p>
+          <div className="mt-12 aspect-[16/9] overflow-hidden rounded-[15px] bg-[#f2f2f2] lg:mt-16 lg:aspect-[21/9]">
+            <Image
+              src={article.image}
+              alt={article.title}
+              width={1920}
+              height={823}
+              priority
+              sizes="(max-width: 1650px) 100vw, 1650px"
+              className="block h-full w-full object-cover"
+            />
+          </div>
+        </header>
 
-              {/* Section 1 + Exact Redox .thumb-text-wrapper with Parallax Image */}
-              {article.sections[0] && (
-                <div className="mt-14">
-                  <h2 className="title">{article.sections[0].heading}</h2>
-                  {article.sections[0].body[0] && (
-                    <p className="text">{article.sections[0].body[0]}</p>
-                  )}
+        {/* 2. Body */}
+        <div className="rx-container section-spacing">
+          <div className="grid grid-cols-1 gap-14 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-20 xl:grid-cols-[320px_minmax(0,1fr)] xl:gap-28">
+            <aside className="lg:sticky lg:top-10 lg:self-start">
+              <div className="border-t border-[var(--border)] pt-6">
+                <p className="text-[13px] font-medium tracking-[0.04em] text-[var(--primary)]">
+                  On this page
+                </p>
+                <ol className="mt-4 space-y-3">
+                  {toc.map((item, idx) => (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        className="flex gap-3 text-[14px] leading-[1.4] text-[var(--secondary)] transition-colors hover:text-[var(--primary)]"
+                      >
+                        <span className="w-6 shrink-0 text-[#999999]">
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
 
-                  <div className="mt-8 grid grid-cols-1 items-start gap-8 md:grid-cols-2">
-                    <div className="thumb parallax-view rounded-[15px]">
-                      <Image
-                        src={article.image}
-                        alt={article.sections[0].heading}
-                        width={640}
-                        height={480}
-                        data-speed="0.8"
-                        sizes="(max-width: 767px) 100vw, 510px"
-                        style={{ height: "auto" }}
-                      />
-                    </div>
-                    <div className="space-y-5">
-                      {article.sections[0].body.slice(1).map((p, idx) => (
-                        <p key={idx} className="text">
-                          {p}
-                        </p>
-                      ))}
-                      <div className="pt-2">
-                        <Link
-                          href={`/services/${article.relatedService}`}
-                          className="rx-btn-underline"
-                        >
-                          {article.relatedServiceLabel}
-                          <span className="icon">
-                            <Image
-                              src="/assets/imgs/icon/icon-5.webp"
-                              alt=""
-                              width={13}
-                              height={13}
-                            />
-                          </span>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+              <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-[var(--border)] pt-6 text-[14px] lg:grid-cols-1">
+                <div>
+                  <dt className="text-[#999999]">Written by</dt>
+                  <dd className="mt-1 text-[var(--primary)]">
+                    {article.author}
+                  </dd>
                 </div>
-              )}
+                <div>
+                  <dt className="text-[#999999]">Published</dt>
+                  <dd className="mt-1 text-[var(--primary)]">
+                    {formatBlogDate(article.publishedAt)}
+                  </dd>
+                </div>
+                {article.updatedAt !== article.publishedAt && (
+                  <div>
+                    <dt className="text-[#999999]">Updated</dt>
+                    <dd className="mt-1 text-[var(--primary)]">
+                      {formatBlogDate(article.updatedAt)}
+                    </dd>
+                  </div>
+                )}
+                <div>
+                  <dt className="text-[#999999]">Reading time</dt>
+                  <dd className="mt-1 text-[var(--primary)]">
+                    {article.readMinutes} min
+                  </dd>
+                </div>
+              </dl>
 
-              {/* Key Takeaways in clean /startup-agency top/bottom hairline rows */}
-              <div className="mt-16 border-t border-black/10 pt-10">
-                <h2 className="title">Key Engineering Takeaways</h2>
-                <div className="divide-y divide-black/10 border-y border-black/10">
+              <div className="mt-10 flex flex-wrap gap-2 border-t border-[var(--border)] pt-6">
+                {article.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-[var(--border)] px-4 py-1 text-[13px] font-medium leading-[24px] text-[var(--primary)]"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </aside>
+
+            <div className="max-w-[860px]">
+              {/* Key takeaways first, so the point lands before the detail. */}
+              <section
+                id="key-takeaways"
+                className="fade-anim scroll-mt-10 rounded-[15px] bg-[#f6f6f6] p-7 sm:p-10"
+              >
+                <RxSubtitle>Key takeaways</RxSubtitle>
+                <ol className="mt-6 divide-y divide-[var(--border)]">
                   {article.keyTakeaways.map((point, idx) => (
-                    <div
+                    <li
                       key={point}
-                      className="grid grid-cols-1 gap-4 py-6 sm:grid-cols-[90px_1fr]"
+                      className="grid grid-cols-[48px_1fr] gap-3 py-5 first:pt-0 last:pb-0"
                     >
-                      <span className="text-[18px] text-[#111111]">
-                        (00{idx + 1})
+                      <span className="text-[15px] text-[#999999]">
+                        ({String(idx + 1).padStart(2, "0")})
                       </span>
-                      <p className="text-[20px] leading-[28px] text-[#111111]">
+                      <p className="text-[17px] leading-[1.5] text-[var(--primary)]">
                         {point}
                       </p>
-                    </div>
+                    </li>
                   ))}
-                </div>
-              </div>
+                </ol>
+              </section>
 
-              {/* Section 2 + Exact Redox .gallery-wrapper 2-Col Parallax Images */}
-              {article.sections[1] && (
-                <div className="mt-16">
-                  <h2 className="title">{article.sections[1].heading}</h2>
-                  {article.sections[1].body.map((p, idx) => (
-                    <p key={idx} className="text">
-                      {p}
-                    </p>
-                  ))}
-
-                  <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                    <div className="image parallax-view rounded-[15px]">
-                      <Image
-                        src="/assets/imgs/gallery/image-37.webp"
-                        alt="ECOTECH CORE architecture detail"
-                        width={640}
-                        height={460}
-                        data-speed="0.8"
-                        sizes="(max-width: 767px) 100vw, 510px"
-                        style={{ height: "auto" }}
-                      />
-                    </div>
-                    <div className="image parallax-view rounded-[15px]">
-                      <Image
-                        src="/assets/imgs/gallery/image-38.webp"
-                        alt="ECOTECH CORE production verification"
-                        width={640}
-                        height={460}
-                        data-speed="0.8"
-                        sizes="(max-width: 767px) 100vw, 510px"
-                        style={{ height: "auto" }}
-                      />
-                    </div>
+              {sections.map((section, idx) => (
+                <section
+                  key={section.id}
+                  id={section.id}
+                  className="fade-anim mt-16 scroll-mt-10 border-t border-[var(--border)] pt-10 lg:mt-20"
+                >
+                  <span className="text-[15px] text-[#999999]">
+                    ({String(idx + 1).padStart(2, "0")})
+                  </span>
+                  <h2 className="mt-4 font-display text-[28px] font-normal leading-[1.06] tracking-[-0.05em] text-[var(--primary)] lg:text-[40px]">
+                    {section.heading}
+                  </h2>
+                  <div className="mt-6 space-y-5">
+                    {section.body.map((paragraph, pIdx) => (
+                      <p
+                        key={pIdx}
+                        className="text-[17px] leading-[1.7] text-[var(--secondary)] lg:text-[18px]"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
                   </div>
-                </div>
-              )}
-
-              {/* Remaining Sections */}
-              {article.sections.slice(2).map((section) => (
-                <div key={section.heading} className="mt-14">
-                  <h2 className="title">{section.heading}</h2>
-                  {section.body.map((paragraph, idx) => (
-                    <p key={idx} className="text">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+                </section>
               ))}
 
-              {/* Tags */}
-              <div className="tags-wrapper">
-                <span className="text-lg font-medium text-[#111111]">
-                  Tags:
-                </span>
-                <div className="tags">
-                  {article.tags.map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* FAQ */}
               {article.faq.length > 0 && (
-                <div className="mt-16 border-t border-black/10 pt-12">
-                  <h2 className="title">Frequently Asked Questions</h2>
+                <section
+                  id="faq"
+                  className="fade-anim mt-16 scroll-mt-10 border-t border-[var(--border)] pt-10 lg:mt-20"
+                >
+                  <h2 className="mb-8 font-display text-[28px] font-normal leading-[1.06] tracking-[-0.05em] text-[var(--primary)] lg:text-[40px]">
+                    Frequently asked questions
+                  </h2>
                   <FaqAccordion items={article.faq} theme="light" />
-                </div>
+                </section>
               )}
+
+              <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-[var(--border)] pt-8">
+                <RxUnderlineLink href="/blog">Back to all articles</RxUnderlineLink>
+                <span className="text-[13px] text-[#999999]">
+                  {article.readMinutes} min read · {article.category}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </article>
 
-      {/* 3. Recent Blog Row with .parallax-view images */}
-      <section className="blog-area-2 section-light section-spacing-bottom">
-        <div className="rx-container">
-          <div className="section-header fade-anim">
-            <div className="section-title-wrapper">
-              <div className="subtitle-wrapper">
-                <span className="rx-section-subtitle">
-                  Recent blog
-                  <svg
-                    viewBox="0 0 99 7"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M1.41291 5.98894C1.41291 5.98894 3.65997 6.01383 4.51655 5.98894C7.19358 5.56824 10.4255 5.80978 13.363 5.56824C17.8256 5.20128 22.1327 4.79415 26.6187 4.79415C31.6715 4.79415 36.6774 4.21934 41.7162 4.18834C46.981 4.15594 52.2465 4.18834 57.5114 4.18834C68.6462 4.18834 79.781 4.18834 90.9158 4.18834C121.155 6.61149 47.6583 -1.30401 1 1.68408"
-                      stroke="#111111"
-                      strokeLinecap="round"
-                      className="svg-elem-1"
-                    />
-                  </svg>
-                </span>
-              </div>
-              <div className="title-wrapper">
-                <h2 className="rx-section-title">More from our journal</h2>
-              </div>
+      {/* 3a. Related service */}
+      <section className="section-dark">
+        <div className="rx-container section-spacing">
+          <div className="fade-anim grid grid-cols-1 items-end gap-10 lg:grid-cols-[1fr_auto]">
+            <div>
+              <RxSubtitle>Put this into practice</RxSubtitle>
+              <h2 className="mt-8 max-w-[900px] font-heading text-[32px] font-normal leading-[1.02] tracking-[-0.05em] text-[var(--primary)] sm:text-[44px] lg:text-[60px]">
+                {article.relatedServiceLabel}
+              </h2>
             </div>
+            <RxButton href={`/services/${article.relatedService}`} variant="outline-light">
+              See the service
+            </RxButton>
+          </div>
+        </div>
+      </section>
+
+      {/* 3b. More articles */}
+      <section className="section-light">
+        <div className="rx-container section-spacing">
+          <div className="flex flex-col gap-6 border-t border-[var(--border)] pt-8 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <RxSubtitle>Keep reading</RxSubtitle>
+              <h2 className="mt-6 font-heading text-[32px] font-normal leading-none tracking-[-0.05em] text-[var(--primary)] lg:text-[44px]">
+                More from the journal
+              </h2>
+            </div>
+            <RxUnderlineLink href="/blog">All articles</RxUnderlineLink>
           </div>
 
-          <div className="blogs-wrapper-box">
-            <div className="blogs-wrapper">
-              {recent.map((item) => (
-                <Link key={item.slug} href={`/blog/${item.slug}`}>
-                  <article className="blog fade-anim">
-                    <div className="thumb parallax-view">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        width={640}
-                        height={440}
-                        data-speed="0.85"
-                        sizes="(max-width: 991px) 100vw, 33vw"
-                      />
-                    </div>
-                    <div className="content-wrapper">
-                      <div className="content">
-                        <h3 className="title">
-                          {item.title}
-                          <span className="arrow" aria-hidden="true">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 13 14"
-                              fill="none"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M8.98834 0.661257C8.91884 0.781628 8.85302 0.903885 8.79094 1.02786C8.47298 1.49122 8.0835 1.90234 7.63629 2.2455C7.07879 2.67328 6.4425 2.98707 5.76373 3.16894C5.08497 3.35082 4.37702 3.39722 3.68033 3.3055C2.98363 3.21377 2.31182 2.98572 1.70325 2.63437L0.869521 4.07843C1.66772 4.53928 2.54888 4.83839 3.46268 4.95869C4.37648 5.079 5.30502 5.01814 6.1953 4.77959C6.36565 4.73394 6.53397 4.68196 6.6999 4.62381L2.03475 12.7041L3.47584 13.5361L8.16052 5.42201C8.19489 5.61171 8.23713 5.80022 8.28719 5.98704C8.52574 6.87732 8.9373 7.71189 9.49839 8.44311C10.0595 9.17433 10.7591 9.78788 11.5573 10.2487L12.391 8.80466C11.7825 8.4533 11.2491 7.98552 10.8213 7.42803C10.3935 6.87053 10.0797 6.23423 9.89783 5.55547C9.71595 4.8767 9.66955 4.16876 9.76128 3.47206C9.83484 2.91326 9.99611 2.37047 10.2384 1.86349C10.3146 1.74781 10.3875 1.62977 10.457 1.50948L10.4323 1.49521L10.4324 1.49499L8.98834 0.661257Z"
-                              />
-                            </svg>
-                          </span>
-                        </h3>
-                        <div className="meta">
-                          <span className="name">
-                            By <span>{item.author}</span>
-                          </span>
-                          <span className="date has-left-line">
-                            {item.publishedAt}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              ))}
-            </div>
+          <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-x-14">
+            {recent.map((item) => (
+              <BlogCard key={item.slug} article={item} />
+            ))}
           </div>
         </div>
       </section>
